@@ -21,6 +21,13 @@ const PUBLISHED = [
   ["2024", "Neue Horizonte im Innovationsmanagement – Forschungsimpulse für die Praxis", "Springer Nature, in German", "Book chapter", "Smolinski J., Smolinski R.", "10.1007/978-3-658-44894-3_1"],
   ["2024", "Nachhaltiges Innovationsmanagement: Ideen aus Theorie und Praxis für langfristigen Erfolg", "Springer Nature, in German", "Book chapter", "Smolinski R., Smolinski J., Warecka Z.", "10.1007/978-3-658-44894-3_15"],
 ];
+/* Courses taught, linked to their Aarhus University course catalogue pages. */
+const COURSES = [
+  ["Commercial negotiation", "https://kursuskatalog.au.dk/en/course/144536/Commercial-Negotiation"],
+  ["Business negotiation", "https://kursuskatalog.au.dk/en/course/141552/Business-Negotiation"],
+  ["Business negotiation project", "https://kursuskatalog.au.dk/en/course/141553/Business-Negotiation-Project"],
+  ["Entrepreneurship and business planning", "https://kursuskatalog.au.dk/en/course/141384/Entrepreneurship-and-Business-Planning"],
+];
 /* Journals reviewed for: [journal, link]. Shown on Research and Experience. */
 const REVIEWING = [
   ["AI and Ethics", "https://link.springer.com/journal/43681"],
@@ -208,6 +215,7 @@ home: () => `
         <div class="cc-stat"><b id="now-time">··:··</b><span id="now-day">local time</span></div>
         <div class="cc-stat"><b id="now-temp">·</b><span id="now-sky">sky</span></div>
         <div class="cc-stat"><b id="now-wind">·</b><span>wind</span></div>
+        <div class="cc-stat rain"><b id="now-rain">·</b><span>rain?</span></div>
         <button class="holder" id="now-agent" aria-label="An agent with a verdict on Aarhus right now" data-quip="">${agent("", `<span class="bubble"></span>`)}</button>
       </div>
       <p class="cc-note hand">weather from open-meteo · tap the agent for the local verdict</p>
@@ -272,12 +280,7 @@ research: () => {
   <div class="section rise">
     <div class="sec-head"><h3>Teaching</h3><span class="sc">from the front of the room</span></div>
     <div class="teaching">
-      <ul class="courses">
-        <li>Commercial negotiation</li>
-        <li>Business negotiation</li>
-        <li>Business negotiation project</li>
-        <li>Entrepreneurship and business planning</li>
-      </ul>
+      <ul class="courses">${COURSES.map(([c, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${c}</a></li>`).join("")}</ul>
       <button class="holder cityagent teacher" aria-label="An agent with a pointer" data-quip="Everyone in this room has a BATNA. Check yours.|Lecture rule one: never open with your reservation price.|Office hours: always open to a counter-offer.|Syllabus: BATNA, ZOPA, and snacks.|Students negotiate. Jan grades. Agents take notes.">${agent("arms", `<span class="bubble"></span>`)}</button>
     </div>
   </div>
@@ -472,5 +475,13 @@ experience: () => `
     </section>
     <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><a class="btn" href="assets/Jan-Smolinski-CV.pdf" download>Download CV as PDF ↓</a><span class="sign">No agents beyond this point</span></div>
   </div></div>
+  ${colophon()}`,
+
+lost: () => `
+  <div class="kicker sc rise">p. ? · Lost · not in the contents</div>
+  <h2 class="rise" style="margin-top:10px">This page isn't in the notebook</h2>
+  <p class="lede rise">There's no <i>#${esc((h => { try { return decodeURIComponent(h); } catch (e) { return h; } })(location.hash.slice(1)))}</i> in here. The agent sent to find it is holding the map upside down.</p>
+  <button class="lost-agent rise" aria-label="A lost agent holding a map upside down">${agent("arms", `<span class="bubble"></span><svg class="ov map-ov" viewBox="0 0 32 40" aria-hidden="true"><rect x="1.5" y="3.5" width="29" height="12" rx=".6"/><path d="M11.2 3.5 V15.5 M20.8 3.5 V15.5"/><path class="route" d="M4 6.5 Q9 13 15 8.5 T27 12"/><text x="24.5" y="7" transform="rotate(180 24.5 6)">N</text></svg>`)}</button>
+  <p class="rise"><a href="#home" data-go="home">← Back to the contents</a></p>
   ${colophon()}`
 };

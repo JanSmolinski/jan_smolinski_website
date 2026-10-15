@@ -20,8 +20,8 @@ function setStatus(extra){
   statusEl.textContent = n ? `${n} agents under observation${extra ? ` · ${extra}` : ""}` : "no agents observed";
 }
 
-const STATUS = { home: "tap one", research: "peer-reviewing", projects: "staring at the blob", about: "commuting", opinions: "one asleep", experience: "one sneaking in" };
-const INIT = { home: initHome, research: initResearch, about: initAbout, opinions: initWriting, experience: initCV, projects: initProjects };
+const STATUS = { lost: "one lost", home: "tap one", research: "peer-reviewing", projects: "staring at the blob", about: "commuting", opinions: "one asleep", experience: "one sneaking in" };
+const INIT = { lost: initLost, home: initHome, research: initResearch, about: initAbout, opinions: initWriting, experience: initCV, projects: initProjects };
 
 function render(id, animate){
   current = id;
@@ -39,9 +39,9 @@ function render(id, animate){
 function go(id, push = true){
   if (!PAGES[id] || id === current || busy) return;
   if (push) try { history.pushState(null, "", "#" + id); } catch (e) {}
-  if (reduce()){ render(id, false); return; }
-  busy = true;
   const link = document.querySelector(`#nav a[data-go="${id}"]`);
+  if (reduce() || !link){ render(id, !reduce()); return; }
+  busy = true;
   const t = link.getBoundingClientRect();
   const tx = t.left + Math.min(30, t.width / 2), ty = t.top + t.height / 2;
   let runners = 0;
@@ -160,6 +160,7 @@ function initRunner(){
   const g = document.getElementById("ground"), btn = document.getElementById("playBtn"), hud = document.getElementById("hud");
   if (!g || !btn) return;
   const player = g.querySelector(".agent"), PX = 36, JUMP = 660, GRAV = 2000;
+  try { if (localStorage.getItem("goldAntenna")) player.classList.add("gold"); } catch (e) {}
   const best = () => { try { return +localStorage.getItem("runBest") || 0; } catch (e) { return 0; } };
   let st = null, listening = false;
 
@@ -209,6 +210,10 @@ function initRunner(){
     const dt = Math.min(.05, (now - st.t) / 1000); st.t = now;
     st.speed = Math.min(640, 280 + st.dist * .04);
     st.dist += st.speed * dt; st.score = Math.floor(st.dist / 45);
+    if (st.score >= 100 && !player.classList.contains("gold")){
+      player.classList.add("gold"); try { localStorage.setItem("goldAntenna", "1"); } catch (e) {}
+      say(player, "100 citations! Golden antenna unlocked.", 2600);
+    }
     st.vy -= GRAV * dt; st.y = Math.max(0, st.y + st.vy * dt); if (st.y === 0) st.vy = 0;
     player.style.bottom = st.y + "px";
     if (st.dist >= st.next){
@@ -231,9 +236,24 @@ function initRunner(){
 
 /* "Aarhus right now": local time, live weather, and a verdict from the nearest agent. */
 const SKY = c => c === 0 ? "clear" : c <= 2 ? "partly cloudy" : c === 3 ? "overcast" : c <= 48 ? "fog" : c <= 57 ? "drizzle" : c <= 67 ? "rain" : c <= 77 ? "snow" : c <= 82 ? "showers" : c <= 86 ? "snow showers" : "thunder";
+const WET = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99];
 function nowVerdict(h, d, w){
-  const wet = w && [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code);
+  const wet = w && WET.includes(w.code);
   if (d === "Thu" && h >= 18 && h < 23) return "Quiz night o'clock. Bring snacks and a team name.";
+  if (RACE){
+    const n = RACE.n.replace(/ Grand Prix$/, " GP");
+    if (d === "Sun"){
+      if (!RACE.t) return `${n} today. Lights out later. Box, box.`;
+      const start = new Date(`${RACE.d}T${RACE.t}`), now = Date.now();
+      const lo = start.toLocaleTimeString("en-GB", { timeZone: "Europe/Copenhagen", hour: "2-digit", minute: "2-digit" });
+      if (now < start) return `${n} today. Lights out at ${lo}, Aarhus time.`;
+      if (now < start.getTime() + 2.2 * 36e5) return `${n} is on. Do not disturb.`;
+      return `${n} done. Strategy is being argued about.`;
+    }
+    if (d === "Sat") return `${n} qualifying today. Phones on silent.`;
+    if (d === "Fri") return h >= 15 ? `Fredagsbar, with ${n} practice on the big screen.` : `${n} weekend. Practice later. Concentration low.`;
+  }
+  if (d === "Fri" && h >= 15 && h < 23) return "Fredagsbar. Science resumes Monday.";
   if (wet) return "Rain again. The bike has opinions.";
   if (h < 6) return "Why is anyone awake? Even the agents are idle.";
   if (h < 9) return "Coffee first. Then science.";
@@ -248,7 +268,7 @@ async function initNow(){
   const $ = id => card.querySelector("#" + id), w = {};
   const paint = () => {
     if (!card.isConnected) return;
-    const n = new Date(), tz = { timeZone: "Europe/Copenhagen" };
+    const n = PREVIEW ? TODAY : new Date(), tz = { timeZone: "Europe/Copenhagen" };
     const hm = n.toLocaleTimeString("en-GB", { ...tz, hour: "2-digit", minute: "2-digit" });
     const day = n.toLocaleDateString("en-GB", { ...tz, weekday: "short" });
     $("now-time").textContent = hm;
@@ -257,17 +277,21 @@ async function initNow(){
     $("now-agent").dataset.quip = v;
     $("now-note").textContent = v;
   };
+  repaintNow = paint;
   paint(); const iv = setInterval(() => card.isConnected ? paint() : clearInterval(iv), 30000);
   try {
-    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.16&longitude=10.2&current=temperature_2m,weather_code,wind_speed_10m&wind_speed_unit=ms");
-    const c = (await r.json()).current;
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.16&longitude=10.2&current=temperature_2m,weather_code,wind_speed_10m,precipitation&hourly=precipitation_probability&forecast_hours=6&wind_speed_unit=ms");
+    const j = await r.json(), c = j.current;
     w.code = c.weather_code;
     $("now-temp").textContent = Math.round(c.temperature_2m) + "°C";
     $("now-sky").textContent = SKY(c.weather_code);
     $("now-wind").textContent = Math.round(c.wind_speed_10m) + " m/s";
+    /* Rain? In Aarhus the honest default is yes. */
+    const soon = Math.max(0, ...((j.hourly && j.hourly.precipitation_probability) || []).filter(n => n != null));
+    $("now-rain").textContent = c.precipitation > 0 || WET.includes(c.weather_code) ? "Yes." : soon >= 60 ? "Soon." : soon >= 30 ? "Probably." : "No. Suspicious.";
     paint();
   } catch (e) {
-    $("now-temp").textContent = "?"; $("now-sky").textContent = "window is foggy"; $("now-wind").textContent = "?";
+    $("now-temp").textContent = "?"; $("now-sky").textContent = "window is foggy"; $("now-wind").textContent = "?"; $("now-rain").textContent = "Probably.";
   }
 }
 
@@ -343,14 +367,38 @@ const R2 = [
 ];
 function initResearch(){
   initCitations();
-  stage.querySelectorAll("[data-r2]").forEach(btn => btn.addEventListener("click", () => {
-    const plate = btn.closest(".plate");
+  /* The citation agent can't wait to be asked. */
+  const ca = stage.querySelector(".citeagent");
+  if (ca) setTimeout(() => { if (ca.isConnected) say(ca.querySelector(".agent"), pick(ca.dataset.quip.split("|")), 3400); }, 1600);
+  stage.querySelectorAll("[data-r2]").forEach(btn => { let asks = 0; btn.addEventListener("click", () => {
+    const plate = btn.closest(".plate"), done = ++asks >= 10;
     plate.querySelector(".margin-note")?.remove();
     const n = document.createElement("div");
     n.className = "margin-note in";
-    n.innerHTML = `<span class="hand">Reviewer 2: ${pick(R2)}</span>${agent("flip")}`;
+    n.innerHTML = `<span class="hand">Reviewer 2: ${done ? "Fine. Accept as is." : asks === 7 ? "Persistent. I respect that. Still no." : pick(R2)}</span>${agent("flip")}`;
     plate.appendChild(n);
     btn.textContent = "Ask again";
+    if (done){
+      btn.textContent = "Accepted. Reviewer 2 has left the building"; btn.disabled = true;
+      plate.insertAdjacentHTML("beforeend", stamp("Accepted", "--sage").replace('class="stamp"', 'class="stamp accepted"'));
+    }
+  }); });
+  initPassport();
+}
+
+/* Tap the agent on every conference stamp and the passport is complete. */
+const CHEER = ["Hooray!", "Stamped!", "Where next?", "Frequent flyer!", "Upgrade, please."];
+function initPassport(){
+  const seen = new Set(), cards = [...stage.querySelectorAll(".citycard .cityagent")];
+  cards.forEach((b, i) => b.addEventListener("click", () => {
+    seen.add(i);
+    if (seen.size < cards.length || stage.querySelector(".passport")) return;
+    setTimeout(() => {
+      if (!b.isConnected) return;
+      stage.querySelector(".stamps").insertAdjacentHTML("afterend", `<div class="passport"><b>Passport complete</b><span>${cards.length} conferences · 0 lost luggage</span></div>`);
+      cards.forEach((c, k) => setTimeout(() => say(c.querySelector(".agent"), pick(CHEER), 2400), k * 160));
+      setStatus("passport complete");
+    }, 2500);
   }));
 }
 
@@ -641,8 +689,107 @@ themeBtn.addEventListener("click", () => {
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paintToggle);
 paintToggle();
 
+/* ---------- lost: a #link that isn't in the contents ---------- */
+const LOST = ["North is… down? Probably down.", "I asked for directions. The map said no.", "Have you tried the contents page?", "This is fine. I'm exploring."];
+function initLost(){
+  const a = stage.querySelector(".lost-agent");
+  if (a) a.addEventListener("click", () => say(a.querySelector(".agent"), pick(LOST), 2600));
+}
+
+/* ---------- easter eggs ---------- */
+const inView = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight; };
+
+/* Switch tabs and the title notices. */
+const TITLE = document.title, AWAY = ["(1) agent misses you", "Come back, we're mid-negotiation", "Agents unsupervised…", "Your offer expires in 3… 2…"];
+document.addEventListener("visibilitychange", () => { document.title = document.hidden ? pick(AWAY) : TITLE; });
+
+/* Typed sequences: "batna" makes everyone walk away; the Konami code hands out pirate hats. */
+const KONAMI = "ArrowUp ArrowUp ArrowDown ArrowDown ArrowLeft ArrowRight ArrowLeft ArrowRight b a";
+let keys = [];
+document.addEventListener("keydown", e => {
+  const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+  keys = [...keys, e.key.length === 1 ? e.key.toLowerCase() : e.key].slice(-10);
+  if (keys.join(" ") === KONAMI){ keys = []; pirates(); }
+  else if (keys.slice(-5).join("") === "batna"){ keys = []; walkAway(); }
+});
+
+const ARR = ["Arr!", "Yo ho ho!", "Hoist the BATNA!", "Shiver me tokens."];
+function pirates(){
+  const on = document.body.classList.toggle("pirates");
+  [...stage.querySelectorAll(".agent")].filter(a => inView(a) && a.querySelector(".bubble")).slice(0, 4)
+    .forEach((a, i) => setTimeout(() => say(a, on ? pick(ARR) : "Back to the navy.", 2200), i * 220));
+  setStatus(on ? "pirates aboard" : STATUS[current]);
+}
+
+let walking = false;
+function walkAway(){
+  if (walking || busy || reduce()) return;
+  const els = [...stage.querySelectorAll(".agent")].filter(inView);
+  if (!els.length) return;
+  walking = true;
+  setStatus("BATNA exercised. Everyone left");
+  const moves = els.map(el => {
+    const r = el.getBoundingClientRect(), left = r.left + r.width / 2 < innerWidth / 2;
+    const dx = left ? -(r.right + 80) : innerWidth - r.left + 80, cls = el.className;
+    el.classList.add("walk"); el.classList.toggle("flip", left);
+    const out = el.animate([{ transform: "translateX(0)" }, { transform: `translateX(${dx}px)` }],
+      { duration: 1300 + Math.random() * 600, delay: Math.random() * 300, easing: "ease-in", fill: "forwards", composite: "add" });
+    return { el, dx, cls, out };
+  });
+  setTimeout(() => {
+    let first = true;
+    moves.forEach(m => {
+      if (!m.el.isConnected) return;
+      m.el.classList.toggle("flip", m.dx > 0);
+      const back = m.el.animate([{ transform: `translateX(${m.dx}px)` }, { transform: "translateX(0)" }],
+        { duration: 1300 + Math.random() * 500, easing: "ease-out", fill: "forwards", composite: "add" });
+      back.onfinish = () => {
+        m.out.cancel(); back.cancel(); m.el.className = m.cls;
+        if (first && m.el.querySelector(".bubble")){ first = false; say(m.el, "Fine. Counter-offer?", 2400); }
+      };
+    });
+    setTimeout(() => { walking = false; if (current) setStatus(STATUS[current]); }, 2100);
+  }, 4200);
+}
+
+/* For anyone who opens the developer tools. */
+console.log(`%c
+       o
+      /
+   .-'-.
+  (   o )   Agens vulgaris, spotted in your DevTools.
+   '---'    Curious how it works? ${EMAIL}
+   /   \\
+`, "font:13px/1.35 ui-monospace,Menlo,monospace;color:#B4462B");
+
+/* Dates. Add ?today=2026-05-04 to the address to preview one. */
+const PREVIEW = new URLSearchParams(location.search).has("today");
+const TODAY = (() => { const q = new URLSearchParams(location.search).get("today"); const d = q ? new Date(q + "T12:00") : new Date(); return isNaN(d) ? new Date() : d; })();
+if (TODAY.getMonth() === 4 && TODAY.getDate() === 4) document.body.classList.add("may4");
+if (TODAY.getMonth() === 11) document.body.classList.add("xmas");
+/* Formula One race weekend (Friday to Sunday): every agent wears a helmet and the Aarhus card follows the race.
+   Calendar from the jolpica F1 API, cached for a week. */
+let RACE = null, repaintNow = null;
+raceWeekend();
+async function raceWeekend(){
+  const y = TODAY.getFullYear(), key = "f1-v2-" + y;
+  let races = null;
+  try { const c = JSON.parse(localStorage.getItem(key)); if (c && Date.now() - c.t < 6048e5) races = c.d; } catch (e) {}
+  if (!races){
+    try {
+      races = (await (await fetch(`https://api.jolpi.ca/ergast/f1/${y}.json`)).json()).MRData.RaceTable.Races.map(r => ({ d: r.date, t: r.time, n: r.raceName }));
+      try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d: races })); } catch (e) {}
+    } catch (e) { return; }
+  }
+  const t = TODAY.getTime();
+  RACE = races.find(r => { const end = new Date(r.d + "T23:59").getTime(); return t <= end && t > end - 3 * 864e5; }) || null;
+  if (!RACE) return;
+  document.body.classList.add("raceweekend");
+  if (repaintNow) repaintNow();
+}
+
 const ALIAS = { ventures: "projects", cv: "experience", writing: "opinions" };
-const fromHash = () => { const h = (location.hash || "").slice(1); const id = ALIAS[h] || h; return PAGES[id] ? id : "home"; };
+const fromHash = () => { const h = (location.hash || "").slice(1); const id = ALIAS[h] || h; return PAGES[id] ? id : h ? "lost" : "home"; };
 render(fromHash(), false);
 /* Back/forward buttons and hand-edited #links switch pages too. */
 addEventListener("popstate", () => go(fromHash(), false));
