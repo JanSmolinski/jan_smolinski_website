@@ -106,26 +106,49 @@ const anatomy = () => {
 const SHELF = [
   { label: "Books", items: [
     { slug: "capital", title: "Capital, Vol. 1", author: "Marx", c: "#8A2F2A", tag: "currently reading", note: "Reading it the slow way.", quip: "Surplus value? I work for free." },
-    { slug: "chapman-homer", title: "Chapman's Homer", author: "Homer", c: "#3E5A44", note: "Working through it line by line, Keats-style.", quip: "Much have I travell'd in the realms of gold." },
+    { slug: "zarathustra", title: "Thus Spoke Zarathustra", author: "Nietzsche", c: "#4A5A6A", note: "Down from the mountain, one parable at a time.", quip: "God is dead. My inbox is not." },
+    { slug: "mans-search-for-meaning", title: "Man's Search for Meaning", author: "Frankl", c: "#1A1A1A", note: "Short, and not easy to put down.", quip: "Meaning found. Now I just need a calendar." },
+    { slug: "monte-cristo", title: "The Count of Monte Cristo", author: "Dumas", c: "#1D2A3A", note: "Patience, planning and a very strong BATNA.", quip: "All human wisdom is contained in these words: wait and hope." },
+    { slug: "siddhartha", title: "Siddhartha", author: "Hesse", c: "#2A3A8A", note: "A long walk to the river.", quip: "The river gives no feedback. Disappointing." },
+    { slug: "epictetus", title: "Discourses", author: "Epictetus", c: "#1D2A3A", note: "Control what you can. Ignore the reviewers.", quip: "Dichotomy of control: I control the draft, not Reviewer 2." },
+    { slug: "around-the-world-in-80-days", title: "Around the World in 80 Days", author: "Verne", c: "#3A2A7A", note: "Eighty days, one wager, and zero travel insurance.", quip: "Phileas Fogg never once checked the exchange rate." },
+    { slug: "getting-to-yes", title: "Getting to Yes", author: "Fisher & Ury", c: "#C8283A", note: "The negotiation classic. Principled, patient, still relevant.", quip: "Separate the people from the problem. Then still take it personally." },
+    { slug: "crime-and-punishment", title: "Crime and Punishment", author: "Dostoevsky", c: "#5A2A6A", note: "Long, dark, and very good.", quip: "Raskolnikov skipped the part where you talk it out first." },
     { title: "book", kind: "empty", quip: "Another book goes here." },
   ] },
   { label: "Films and TV", items: [
     { slug: "empire-strikes-back", title: "The Empire Strikes Back", author: "Star Wars", kind: "film", c: "#1F2230", tag: "perpetually watching", note: "Star Wars since I was a small child, and this one on a loop. I even wrote a book chapter on Padmé vs. Palpatine as negotiators.", quip: "I am your… co-author." },
+    { slug: "raiders-of-the-lost-ark", title: "Raiders of the Lost Ark", author: "Steven Spielberg", kind: "film", c: "#6A4A2A", note: "It belongs in a museum.", quip: "I negotiate like Indy: improvise, then run." },
+    { slug: "top-gun", title: "Top Gun", author: "Tony Scott", kind: "film", c: "#1F3A5A", note: "Highway to the danger zone.", quip: "I feel the need, the need for a BATNA." },
+    { slug: "the-terminal", title: "The Terminal", author: "Steven Spielberg", kind: "film", c: "#3A4A5A", note: "A man, an airport, and the longest negotiation with bureaucracy.", quip: "Stuck at the gate. Counter-offer: a stamp." },
+    { slug: "austin-powers", title: "Austin Powers", author: "Mike Myers", kind: "film", c: "#1F4A9A", note: "Yeah, baby, yeah.", quip: "I only negotiate in groovy terms, baby." },
     { slug: "formula-one", title: "Formula One", author: "every Sunday", kind: "film", c: "#A3302A", note: "Every race weekend. Lights out and away we go.", quip: "Box, box. Tyres are gone." },
     { title: "film", kind: "empty", quip: "Popcorn is ready. The film isn't." },
   ] },
   { label: "Music", items: [
     { slug: "queen-the-game", title: "The Game", author: "Queen", kind: "music", c: "#2B2B2B", tag: "perpetually listening", note: "Queen, The Game. On repeat since forever.", quip: "Another one bites the dust. Usually the other side's BATNA." },
-    { title: "album", kind: "empty music", quip: "Play something. Anything." },
+    { slug: "too-low-for-zero", title: "Too Low for Zero", author: "Elton John", kind: "music", c: "#E8E4DA", note: "Home of I'm Still Standing.", quip: "I'm still standing. Usually after the last counter-offer." },
+    { slug: "abba-arrival", title: "Arrival", author: "ABBA", kind: "music", c: "#1A2A3A", note: "Helicopter on the cover, Dancing Queen inside.", quip: "Take a chance on me. Preferably with a vesting cliff." },
+    { slug: "brothers-in-arms", title: "Brothers in Arms", author: "Dire Straits", kind: "music", c: "#8AA8D0", note: "That guitar solo, start to finish.", quip: "Money for nothing. Zero for the junior authors." },
+    { slug: "beatles-1967-1970", title: "1967–1970", author: "The Beatles", kind: "music", c: "#1E4A9A", note: "The Blue Album, looking down the stairwell.", quip: "Let it be. Or at least, let it be a fair split." },
+    { slug: "rumours", title: "Rumours", author: "Fleetwood Mac", kind: "music", c: "#E8DCC0", note: "Go your own way. Preferably after the deal.", quip: "Never going back again. Except for the follow-up round." },
+    { slug: "toto-iv", title: "Toto IV", author: "Toto", kind: "music", c: "#B8282A", note: "Africa, and everything else on it.", quip: "Africa is stuck in my head. Send help." },
+    { slug: "1989-taylors-version", title: "1989 (Taylor's Version)", author: "Taylor Swift", kind: "music", c: "#A8C8E8", note: "The seagull album.", quip: "Shake it off. Then renegotiate the contract." },
+    { slug: "slippery-when-wet", title: "Slippery When Wet", author: "Bon Jovi", kind: "music", c: "#2A2A2A", note: "Eighties hair, nineties negotiating.", quip: "Livin' on a prayer. Also on a BATNA." },
     { title: "album", kind: "empty music", quip: "My playlist is just modem noises." },
   ] },
   { label: "Games", items: [ // add  tag: "currently playing"  to the one you're playing
-    { slug: "assassins-creed", title: "Assassin's Creed Revelations", kind: "game", c: "#5A4A3A", note: "History you can climb. Game of the year, 2011.", quip: "I also climb things. Mostly ladders." },
-    { slug: "half-life-2", title: "Half-Life 2", kind: "game", c: "#7A4A1F", note: "Game of the year, 2004.", quip: "Rise and shine, Mr. Freeman." },
-    { slug: "civilization-v", title: "Civilization V", kind: "game", c: "#3A4A5A", note: "One more turn. Game of the year, 2010.", quip: "Gandhi wants to negotiate. Be careful." },
-    { slug: "red-dead-2", title: "Red Dead Redemption 2", kind: "game", c: "#8A2F2A", note: "Game of the year, 2018.", quip: "I have a plan. I just need more money." },
-    { slug: "forza-horizon-5", title: "Forza Horizon 5", kind: "game", c: "#2F4A6D", note: "Driving, ideally on a proper sim rig.", quip: "Zero to sixty in one lap of the sofa." },
-    { slug: "balatro", title: "Balatro", kind: "game", c: "#6A2F4A", tag: "currently playing", note: "Poker, but it's maths. Game of the year, 2024.", quip: "Expected value says: one more run." },
+    { slug: "balatro", title: "Balatro", kind: "game", c: "#6A2F4A", tag: "perpetually playing", note: "Poker, but it's maths.", quip: "Expected value says: one more run." },
+    { slug: "assassins-creed-2", title: "Assassin's Creed II", kind: "game", c: "#5A4A3A", note: "Ezio, Italy and a very long cape.", quip: "I also climb things. Mostly ladders." },
+    { slug: "forza-horizon-2", title: "Forza Horizon 2", kind: "game", c: "#2F4A6D", note: "Driving, ideally on a proper sim rig.", quip: "Zero to sixty in one lap of the sofa." },
+    { slug: "dirt-3", title: "DiRT 3", kind: "game", c: "#1A9AA8", note: "Rally, gymkhana and a lot of mud.", quip: "Understeer is just a negotiation with the corner." },
+    { slug: "gta-v", title: "Grand Theft Auto V", kind: "game", c: "#1A1A1A", note: "Three protagonists, zero BATNAs.", quip: "Strictly fictional negotiation tactics. Mostly." },
+    { slug: "indiana-jones-great-circle", title: "Indiana Jones and the Great Circle", kind: "game", c: "#B0742A", note: "Whip, hat and a Vatican conspiracy.", quip: "It belongs in a museum. So does my first draft." },
+    { slug: "watch-dogs", title: "Watch Dogs", kind: "game", c: "#2A3A4A", note: "Hacking a whole city from a phone.", quip: "Hacked the whole city. Still can't hack Reviewer 2." },
+    { slug: "lego-star-wars", title: "LEGO Star Wars: The Complete Saga", kind: "game", c: "#1A2A5A", note: "Every Star Wars scene, rebuilt in bricks.", quip: "Padmé would have negotiated this. In bricks." },
+    { slug: "new-super-mario-bros", title: "New Super Mario Bros.", kind: "game cart mario", c: "#3A8AD0", note: "Jump, stomp, repeat. Slide the cartridge out.", quip: "Jump first, negotiate with the Goomba later." },
+    { slug: "pokemon-soulsilver", title: "Pokémon SoulSilver", kind: "game cart soulsilver", c: "#8A94A8", note: "Johto, Lugia and a Pokéwalker. Slide the cartridge out.", quip: "Gotta catch 'em all. Trades are negotiations." },
+    { title: "game", kind: "empty", quip: "Press start. Then press start again." },
   ] },
 ];
 
@@ -355,7 +378,12 @@ about: () => `
         ${photo({ src: "assets/photos/vr-0.jpg", alt: "Young Jan holding a Samsung Gear VR headset to his face", cap: "2016. It started with a phone in a box.", ar: "3/4" })}
         </div>
       </div>
-      ${photo({ src: "assets/photos/aarhus.jpg", alt: "Aarhus", cap: "Aarhus, home base", r: -1, ar: "1/1" })}
+      <div class="pstack aarhus" style="--sa:41/60" aria-label="Photos from Aarhus. Tap the top one to see the next.">
+        ${photo({ src: "assets/photos/aarhus-pierogi.jpg", alt: "Jan rolling out pierogi dough at a white table", cap: "pierogi from scratch. quality control: me", ar: "4/5" })}
+        ${photo({ src: "assets/photos/aarhus-red-car.jpg", alt: "Jan holding a microphone inside a vintage red car cab", cap: "karaoke from the front seat of a very red car", ar: "4/5" })}
+        ${photo({ src: "assets/photos/aarhus-match-night.jpg", alt: "A bar full of Danish football fans watching a match", cap: "match night. red and white everywhere", ar: "4/5" })}
+        ${photo({ src: "assets/photos/aarhus.jpg", alt: "Aarhus marina with sailing boats on a sunny day", cap: "Aarhus, home base", ar: "4/5" })}
+      </div>
       <div class="vrcell">
         <button class="holder cityagent racebuddy" aria-label="An agent with opinions about racing" data-quip="I like when cars go vroom.|Jan's racing analysis: vroom good, crash bad.|He has strong opinions about tyres. Mostly: round.|Sim racing is just negotiating with physics, again.|Pink kart. Serious face. No notes.">${agent("", `<span class="bubble"></span><svg class="ov" viewBox="0 0 32 40" aria-hidden="true"><path class="helmet" d="M4.5 19.5 C4.5 8 10 4.5 16 4.5 C23.5 4.5 28 9.5 28 17 V19.5 Z"/><path class="hstripe" d="M10 6.5 Q16 5.6 22 7"/><path class="hvisor" d="M14 12.5 H28 V19 H14 Z"/></svg>`)}</button>
         <div class="pstack racestack" style="--sa:41/51" aria-label="Racing photos. Tap the top one to see the next.">
@@ -371,7 +399,6 @@ about: () => `
       </div>
     </div>
   </div>
-  <p class="note">Prototype copy. Films and music are empty on purpose: tell me your picks. Cover photos go in assets/covers/.</p>
   ${colophon()}`,
 
 opinions: () => `

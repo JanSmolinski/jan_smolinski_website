@@ -35,7 +35,7 @@ const book = ({ slug, title, author = "", kind = "book", c, note = "", quip = ""
     ? `<button class="book ${kind}" data-note="" data-kind="${title}" data-quip="${esc(quip)}" aria-pressed="false"><div class="cover">+ ${title}</div></button>`
     : `<button class="book ${kind}" style="--c:${c}" data-note="${esc(note)}" data-quip="${esc(quip)}" data-title="${esc(title)}" aria-pressed="false">
         ${tag ? `<span class="tag-note">${tag}</span>` : ""}<div class="cover"><img src="assets/covers/${slug}.jpg" alt="" onerror="this.remove()">
-          <span class="a">${author}</span><span><span class="t">${title}</span><div class="rule"></div></span><span class="a">${{ game: "game", film: "film", music: "LP" }[kind] || "vol."}</span></div>
+          <span class="a">${author}</span><span><span class="t">${title}</span><div class="rule"></div></span><span class="a">${{ game: "game", film: "film", music: "LP" }[kind.split(" ")[0]] || "vol."}</span></div>
       </button>`;
 
 const postmark = (slug, name, place, year) =>

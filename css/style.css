@@ -607,3 +607,51 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 @media (max-width:480px){.courses li{font-size:22px}}
 .teacher .bubble{width:max-content;white-space:normal;text-align:center}
 .teacher .bubble::after{left:auto;right:18px;transform:translate(0,-4px) rotate(45deg)}
+
+.bookcase .shelf{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--ink) 35%,transparent) transparent}
+
+/* shelf animations: books leaf, films unspool, games slide out a disc */
+.book:not(.empty):not(.film):not(.game):not(.music),.book.film:not(.empty),.book.game:not(.empty){isolation:isolate}
+/* books: the cover swings open and pages leaf past */
+.book:not(.empty):not(.film):not(.game):not(.music) .cover{transform-origin:left center;transition:transform .5s cubic-bezier(.3,1.3,.5,1)}
+.book:not(.empty):not(.film):not(.game):not(.music)::before,.book:not(.empty):not(.film):not(.game):not(.music)::after{content:"";position:absolute;left:4px;bottom:3px;width:calc(100% - 4px);aspect-ratio:2/3;z-index:-1;border-radius:0 3px 3px 0;
+  background:repeating-linear-gradient(180deg,transparent 0 9px,color-mix(in srgb,var(--ink) 22%,transparent) 9px 10px),#FFFDF6;
+  border:1px solid color-mix(in srgb,var(--ink) 35%,transparent);box-sizing:border-box;box-shadow:1px 2px 3px rgba(0,0,0,.18);transform-origin:left center;pointer-events:none}
+.book:not(.empty):not(.film):not(.game):not(.music):hover .cover,.book:not(.empty):not(.film):not(.game):not(.music):focus-visible .cover{transform:perspective(520px) rotateY(-54deg)}
+.book:not(.empty):not(.film):not(.game):not(.music):hover::after,.book:not(.empty):not(.film):not(.game):not(.music):focus-visible::after{animation:leaf 0.9s ease-in infinite}
+@keyframes leaf{
+  0%{transform:perspective(520px) rotateY(0);opacity:1}
+  58%{transform:perspective(520px) rotateY(-86deg);opacity:1}
+  59%{transform:perspective(520px) rotateY(-86deg);opacity:0}
+  60%{transform:perspective(520px) rotateY(0);opacity:0}
+  66%,100%{transform:perspective(520px) rotateY(0);opacity:1}
+}
+/* films: a strip of film slides out and rolls */
+.book.film:not(.empty)::after{content:"";position:absolute;right:-6px;bottom:10px;height:130px;width:34px;z-index:-1;border-radius:2px;
+  background:repeating-linear-gradient(180deg,#F4EFE4 0 5px,transparent 5px 10px) 4px 0/4px 100% no-repeat,
+    repeating-linear-gradient(180deg,#F4EFE4 0 5px,transparent 5px 10px) calc(100% - 4px) 0/4px 100% no-repeat,
+    repeating-linear-gradient(180deg,#b79660 0 22px,#2a2622 22px 27px) 12px 0/calc(100% - 24px) 100% no-repeat,#1d1b18;
+  transition:right .35s cubic-bezier(.3,1.4,.5,1)}
+.book.film:not(.empty):hover::after,.book.film:not(.empty):focus-visible::after{right:-30px;animation:filmroll .6s linear infinite}
+@keyframes filmroll{to{background-position:4px 10px,calc(100% - 4px) 10px,12px 27px}}
+/* games: a disc slides out and spins */
+.book.game:not(.empty)::after{content:"";position:absolute;right:-20px;bottom:10px;width:76px;aspect-ratio:1;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle,#F4EFE4 0 9%,#3a3631 9.5% 15%,transparent 15.5%),conic-gradient(from 20deg,#dfe3ec,#9aa3b5,#eef1f6,#8a93a8,#dfe3ec,#aab2c4,#eef1f6,#dfe3ec);
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),0 1px 3px rgba(0,0,0,.25);transition:right .35s cubic-bezier(.3,1.4,.5,1)}
+.book.game:not(.empty):hover::after,.book.game:not(.empty):focus-visible::after{right:-42px;animation:spin 1.6s linear infinite}
+@keyframes spin{to{rotate:360deg}}
+.book.game:not(.empty),.book.film:not(.empty){margin-right:16px}
+@media (prefers-reduced-motion:reduce){.book:not(.empty):not(.film):not(.game):not(.music):hover::after,.book.film:not(.empty):hover::after,.book.game:not(.empty):hover::after{animation:none}}
+.racebuddy .bubble::after{left:17px;transform:translate(0,-4px) rotate(45deg)}
+/* the hovered item sits above its neighbours so its film strip, disc or record is never tucked behind the next cover */
+.book:not(.empty):hover,.book:not(.empty):focus-visible{z-index:3}
+
+/* DS game cards: the cartridge slides out instead of a disc */
+.book.game.cart:not(.empty)::after{right:auto;left:17px;bottom:92px;width:66px;height:72px;aspect-ratio:auto;border-radius:0;rotate:none;transition:bottom .4s cubic-bezier(.3,1.4,.5,1);background:var(--card) center/100% 100% no-repeat;box-shadow:none;filter:drop-shadow(1px 2px 2px rgba(0,0,0,.35))}
+.book.game.cart{--card:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 66 72%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%2366656b%22/%3E%3Cstop offset=%221%22 stop-color=%22%234a494f%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d=%22M9 1H60Q64 1 64 5V66Q64 71 60 71H6Q2 71 2 66V8Z%22 fill=%22url%28%23g%29%22 stroke=%22%232e2d33%22 stroke-width=%221.1%22/%3E%3Cpath d=%22M10 2.5H59.5%22 stroke=%22%23fff%22 stroke-opacity=%22.25%22/%3E%3Crect x=%227%22 y=%227%22 width=%2252%22 height=%2242%22 rx=%223%22 fill=%22%235a595f%22 stroke=%22%23707077%22 stroke-width=%22.8%22/%3E%3Crect x=%2214%22 y=%2214%22 width=%2238%22 height=%2212%22 rx=%226%22 fill=%22%236a696f%22 stroke=%22%232c2b31%22 stroke-width=%221.2%22/%3E%3Ctext x=%2233%22 y=%2222.6%22 text-anchor=%22middle%22 font-family=%22Helvetica%2CArial%2Csans-serif%22 font-weight=%22700%22 font-size=%226.4%22 fill=%22%232c2b31%22%3ENintendo%3C/text%3E%3Ctext x=%2233%22 y=%2235%22 text-anchor=%22middle%22 font-family=%22Helvetica%2CArial%2Csans-serif%22 font-size=%223.4%22 fill=%22%232c2b31%22%3ENTR-005  PAT. PEND.%3C/text%3E%3Ctext x=%2233%22 y=%2243%22 text-anchor=%22middle%22 font-family=%22Helvetica%2CArial%2Csans-serif%22 font-size=%223.8%22 fill=%22%231d1c21%22%3ECDYPN0J20%3C/text%3E%3Crect x=%228%22 y=%2253.5%22 width=%2250%22 height=%2216%22 fill=%22%236f8b3d%22/%3E%3Crect x=%2210.2%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2212.6%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2215.0%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2217.4%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2219.8%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2222.2%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2224.6%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2227.0%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2229.4%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2231.8%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2234.2%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2236.6%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2239.0%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2241.4%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2243.8%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2246.2%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2248.6%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2251.0%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2253.4%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3Crect x=%2255.8%22 y=%2255%22 width=%221.6%22 height=%2213.5%22 fill=%22%23d9b457%22/%3E%3C/svg%3E")}
+.book.game.cart:not(.empty):hover::after,.book.game.cart:not(.empty):focus-visible::after{right:auto;bottom:122px;animation:none}
+.bookcase .shelf:has(.book.cart){padding-top:56px}
+@keyframes cartpop{0%{transform:translateY(0)}40%{transform:translateY(-6px) rotate(-3deg)}100%{transform:translateY(0)}}
+
+.aarhus .photo:nth-child(1) img{object-position:42% 45%}
+.aarhus .photo:nth-child(2) img{object-position:58% 45%}

@@ -18,7 +18,7 @@ First page of each paper, as an image (portrait, about 1:1.32):
 
 ## covers/
 Photos of your own copies work best (2:3):
-- `capital.jpg`, `chapman-homer.jpg`, `f1.jpg`, `assassins-creed.jpg`, `sim-racing.jpg`
+- `capital.jpg`, `zarathustra.jpg`, `mans-search-for-meaning.jpg`, `monte-cristo.jpg`, `siddhartha.jpg`, `epictetus.jpg`, `slippery-when-wet.jpg`, `beatles-1967-1970.jpg`, `1989-taylors-version.jpg`, `rumours.jpg`, `toto-iv.jpg`, `balatro.jpg`, `forza-horizon-2.jpg`, `dirt-3.jpg`, `gta-v.jpg`, `indiana-jones-great-circle.jpg`, `raiders-of-the-lost-ark.jpg`, `watch-dogs.jpg`, `lego-star-wars.jpg`, `new-super-mario-bros.jpg`, `pokemon-soulsilver.jpg`, `the-terminal.jpg`, `austin-powers.jpg`, `abba-arrival.jpg`, `brothers-in-arms.jpg`, `getting-to-yes.jpg`, `crime-and-punishment.jpg`, `top-gun.jpg`, `queen-the-game.jpg`, `assassins-creed-2.jpg`, `forza-horizon-6.jpg`, `too-low-for-zero.jpg`, `around-the-world-in-80-days.jpg`, `f1.jpg`, `assassins-creed.jpg`, `sim-racing.jpg`
 
 ## logos/
 - `discurso.png`, `negotiation-challenge.png`
