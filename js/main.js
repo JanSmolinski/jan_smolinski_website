@@ -236,6 +236,8 @@ function initRunner(){
 
 /* "Aarhus right now": local time, live weather, and a verdict from the nearest agent. */
 const SKY = c => c === 0 ? "clear" : c <= 2 ? "partly cloudy" : c === 3 ? "overcast" : c <= 48 ? "fog" : c <= 57 ? "drizzle" : c <= 67 ? "rain" : c <= 77 ? "snow" : c <= 82 ? "showers" : c <= 86 ? "snow showers" : "thunder";
+/* Stable choice for the hour, so the card doesn't change its mind every repaint. */
+const pickBy = (a, k) => a[k % a.length];
 const WET = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99];
 function nowVerdict(h, d, w){
   const wet = w && WET.includes(w.code);
@@ -246,11 +248,11 @@ function nowVerdict(h, d, w){
       if (!RACE.t) return `${n} today. Lights out later. Box, box.`;
       const start = new Date(`${RACE.d}T${RACE.t}`), now = Date.now();
       const lo = start.toLocaleTimeString("en-GB", { timeZone: "Europe/Copenhagen", hour: "2-digit", minute: "2-digit" });
-      if (now < start) return `${n} today. Lights out at ${lo}, Aarhus time.`;
-      if (now < start.getTime() + 2.2 * 36e5) return `${n} is on. Do not disturb.`;
-      return `${n} done. Strategy is being argued about.`;
+      if (now < start) return `${n} today. Lights out at ${lo}, Aarhus time.${h % 2 ? " Forza Ferrari." : ""}`;
+      if (now < start.getTime() + 2.2 * 36e5) return pickBy([`${n} is on. Do not disturb.`, `${n} is on. Ferrari are “evaluating” the strategy.`], h);
+      return pickBy([`${n} done. Strategy is being argued about.`, `${n} done. Ferrari say next year is the year. Again.`], h);
     }
-    if (d === "Sat") return `${n} qualifying today. Phones on silent.`;
+    if (d === "Sat") return pickBy([`${n} qualifying today. Phones on silent.`, `${n} qualifying today. Ferrari on pole, briefly.`], h);
   }
   if (d === "Fri" && h >= 15 && h < 23) return "Fredagsbar. Science resumes Monday.";
   if (d === "Tue" && h >= 6 && h < 22) return wet ? "Pool day. Wet either way, but the pool is heated." : "Pool day. Lane etiquette is a negotiation too.";
