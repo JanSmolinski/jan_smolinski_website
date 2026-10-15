@@ -380,7 +380,7 @@ about: () => `
       </div>
       <div class="pstack aarhus" style="--sa:41/60" aria-label="Photos from Aarhus. Tap the top one to see the next.">
         ${photo({ src: "assets/photos/aarhus-red-car.jpg", alt: "Jan hosting a quiz night with a microphone inside a vintage red bus cab", cap: "quiz night, hosted by yours truly", ar: "4/5" })}
-        ${photo({ src: "assets/photos/aarhus-table.jpg", alt: "A round dining table with four chairs under a painting of a red Corvette", cap: "the table, and a Corvette on the wall", ar: "4/5" })}
+        ${photo({ src: "assets/photos/aarhus-table.jpg", alt: "A round dining table with four chairs under a painting of a red Corvette", cap: "the negotiation table. the Corvette supervises", ar: "4/5" })}
         ${photo({ src: "assets/photos/aarhus-pierogi.jpg", alt: "Jan rolling out dough at a white table", cap: "dough from scratch. quality control: me", ar: "4/5" })}
         ${photo({ src: "assets/photos/aarhus-match-night.jpg", alt: "A bar full of Danish football fans watching a match", cap: "match night. red and white everywhere", ar: "4/5" })}
         ${photo({ src: "assets/photos/aarhus.jpg", alt: "Aarhus marina with sailing boats on a sunny day", cap: "Aarhus, home base", ar: "4/5" })}
