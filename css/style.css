@@ -656,3 +656,4 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .aarhus .photo:nth-child(1) img{object-position:58% 45%}
 .aarhus .photo:nth-child(2) img{object-position:50% 40%}
 .aarhus .photo:nth-child(3) img{object-position:42% 45%}
+.venture.retired{grid-column:1/-1}
