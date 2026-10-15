@@ -285,8 +285,8 @@ projects: () => `
       ${stamp("Annual", "--pen")}
       <div class="logo"><img src="assets/logos/negotiation-challenge.png" alt="The Negotiation Challenge"></div>
       <p>The Negotiation Challenge is an international negotiation competition for students. I'm part of the team behind it and look after the technical setup. Its rounds also became the dataset for my assessment research.</p>
+      <div class="visit"><a class="btn" href="https://thenegotiationchallenge.org/" target="_blank" rel="noopener">Visit The Negotiation Challenge →</a></div>
       ${photo({ src: "assets/photos/tnc-presenting.jpg", alt: "Jan presenting at The Negotiation Challenge 2025", cap: "presenting the AI scoring results, TNC 2025", r: 1.5, ar: "3/2" })}
-      <div class="aside">Reasoning models turned out to be much better judges of negotiation skill than pattern matchers.</div>
     </article>
     <article class="venture retired rise" style="--d:.2s">
       ${stamp("Retired 2024", "--faint")}
