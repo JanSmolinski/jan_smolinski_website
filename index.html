@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Jan Smolinski · Field Notes</title>
+  <meta name="description" content="Jan Smolinski, PhD fellow at Aarhus University, researching AI agents and how they work with humans, in entrepreneurship and negotiation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script>try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+  <!-- Slight wobble that makes the line drawings look inked by hand. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="1.1"/></filter>
+  </svg>
+
+  <aside>
+    <a class="brand" href="#home" data-go="home">
+      <span class="sc">Field notes of</span>
+      <b>Jan Smolinski</b>
+      <span class="hand">researching AI agents and how they work with humans</span>
+    </a>
+    <nav id="nav" aria-label="Pages">
+      <span class="sc">Contents</span>
+      <a href="#home" data-go="home">Home <span class="pg">1</span></a>
+      <a href="#about" data-go="about">About <span class="pg">2</span></a>
+      <a href="#projects" data-go="projects">Projects <span class="pg">3</span></a>
+      <a href="#research" data-go="research">Research <span class="pg">4</span></a>
+      <a href="#opinions" data-go="opinions">Opinions <span class="pg">5</span></a>
+      <a href="#experience" data-go="experience">Experience <span class="pg">6</span></a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button"><span class="ico" aria-hidden="true"></span><span class="lbl"></span></button>
+    <div class="aside-foot">
+      <span class="hand">Note to visitors:</span><br>
+      the agents are harmless. Tap them. They answer questions, mostly truthfully.
+    </div>
+  </aside>
+
+  <main id="stage" aria-live="polite"></main>
+  <div id="runlayer" aria-hidden="true"></div>
+  <div class="status" id="status" aria-hidden="true">no agents observed</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script src="js/agents.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
