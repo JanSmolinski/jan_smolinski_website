@@ -748,3 +748,11 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
   background:linear-gradient(to top,var(--ink) 0 20%,#D8F6FF 20%);box-shadow:0 0 3px 1px #5FD0FF,0 0 9px 1px #5FD0FF;transform:rotate(16deg);transform-origin:50% 100%}
 .may4 .agent.flip:not(.pirate .agent)::after{left:auto;right:86%;transform:rotate(-16deg);background:linear-gradient(to top,var(--ink) 0 20%,#FFE1DC 20%);box-shadow:0 0 3px 1px #FF4D3D,0 0 9px 1px #FF4D3D}
 @media (prefers-reduced-motion:reduce){.lost-agent .agent>svg:first-child{animation:none}}
+
+/* race weekends: the helmeted agents also sit in little F1 cars that face the way they walk */
+.raceweekend .agent:not(:has(svg.ov)):not(.pirate .agent)::after{content:"";position:absolute;left:-50%;bottom:-4%;width:200%;height:64%;z-index:1;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 24'%3E%3Cpath d='M2.5 1.5h9v3h-9zM3.5 4.5V12' fill='%232A2622' stroke='%232A2622' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M4 12q0-3 4-3h12q1-2 3-2h15q3 0 5 2.5l13.5 6q2.5 1.3.5 3.5H4z' fill='%23B4462B' stroke='%232A2622' stroke-width='1' stroke-linejoin='round'/%3E%3Cpath d='M9 14.2h35' stroke='%23F4EFE4' stroke-width='1' stroke-linecap='round'/%3E%3Ccircle cx='31' cy='13.2' r='3.3' fill='%23F4EFE4' stroke='%232A2622' stroke-width='.6'/%3E%3Ctext x='31' y='15' text-anchor='middle' font-family='Georgia,serif' font-size='5' font-weight='700' fill='%232A2622'%3E4%3C/text%3E%3Cpath d='M50 20.8h9.5' stroke='%232A2622' stroke-width='1.4' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='19' r='4.8' fill='%232A2622'/%3E%3Ccircle cx='12' cy='19' r='1.8' fill='%239C917F'/%3E%3Ccircle cx='49' cy='19.4' r='4.2' fill='%232A2622'/%3E%3Ccircle cx='49' cy='19.4' r='1.6' fill='%239C917F'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.raceweekend .agent.flip:not(:has(svg.ov)):not(.pirate .agent)::after{transform:scaleX(-1)}
+.raceweekend .agent.walk:not(:has(svg.ov))::after{animation:rev .18s steps(2) infinite}
+@keyframes rev{50%{translate:0 -.6px}}
+@media (prefers-reduced-motion:reduce){.raceweekend .agent::after{animation:none}}

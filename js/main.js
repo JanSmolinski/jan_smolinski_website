@@ -251,9 +251,9 @@ function nowVerdict(h, d, w){
       return `${n} done. Strategy is being argued about.`;
     }
     if (d === "Sat") return `${n} qualifying today. Phones on silent.`;
-    if (d === "Fri") return h >= 15 ? `Fredagsbar, with ${n} practice on the big screen.` : `${n} weekend. Practice later. Concentration low.`;
   }
   if (d === "Fri" && h >= 15 && h < 23) return "Fredagsbar. Science resumes Monday.";
+  if (d === "Tue" && h >= 6 && h < 22) return wet ? "Pool day. Wet either way, but the pool is heated." : "Pool day. Lane etiquette is a negotiation too.";
   if (wet) return "Rain again. The bike has opinions.";
   if (h < 6) return "Why is anyone awake? Even the agents are idle.";
   if (h < 9) return "Coffee first. Then science.";
