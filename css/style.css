@@ -312,7 +312,7 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
   body{grid-template-columns:minmax(0,1fr);gap:0;font-size:18px;padding-inline:16px}
   aside{position:static;height:auto;gap:12px;padding-block:18px 10px;border-bottom:1px solid var(--line)}
   .brand b{font-size:24px}
-  nav{flex-direction:row;overflow-x:auto;gap:18px;padding-bottom:4px}
+  nav{flex-direction:row;flex-wrap:wrap;gap:0 18px;padding-bottom:4px}
   nav .sc{display:none}
   nav a{flex:none}
   nav a::after,nav a .pg{display:none}

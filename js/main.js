@@ -36,9 +36,9 @@ function render(id, animate){
 }
 
 /* Changing pages: every visible agent drops what it's doing and runs to the contents entry. */
-function go(id){
+function go(id, push = true){
   if (!PAGES[id] || id === current || busy) return;
-  try { history.replaceState(null, "", "#" + id); } catch (e) {}
+  if (push) try { history.pushState(null, "", "#" + id); } catch (e) {}
   if (reduce()){ render(id, false); return; }
   busy = true;
   const link = document.querySelector(`#nav a[data-go="${id}"]`);
@@ -642,8 +642,10 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paintToggl
 paintToggle();
 
 const ALIAS = { ventures: "projects", cv: "experience", writing: "opinions" };
-const start = ALIAS[(location.hash || "").slice(1)] || (location.hash || "").slice(1);
-render(PAGES[start] ? start : "home", false);
+const fromHash = () => { const h = (location.hash || "").slice(1); const id = ALIAS[h] || h; return PAGES[id] ? id : "home"; };
+render(fromHash(), false);
+/* Back/forward buttons and hand-edited #links switch pages too. */
+addEventListener("popstate", () => go(fromHash(), false));
 
 
 /* Live citation counts from OpenAlex, matched by DOI. Cached for a day; silent if offline. */

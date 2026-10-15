@@ -186,7 +186,7 @@ home: () => `
         <div class="cc-stat"><b id="now-time">··:··</b><span id="now-day">local time</span></div>
         <div class="cc-stat"><b id="now-temp">·</b><span id="now-sky">sky</span></div>
         <div class="cc-stat"><b id="now-wind">·</b><span>wind</span></div>
-        <button class="holder" id="now-agent" data-quip="">${agent("", `<span class="bubble"></span>`)}</button>
+        <button class="holder" id="now-agent" aria-label="An agent with a verdict on Aarhus right now" data-quip="">${agent("", `<span class="bubble"></span>`)}</button>
       </div>
       <p class="cc-note hand">weather from open-meteo · tap the agent for the local verdict</p>
     </div>
@@ -219,7 +219,7 @@ research: () => {
     <div class="cc-stat"><b id="cc-cites">·</b><span>citations</span></div>
     <div class="cc-stat"><b id="cc-h">·</b><span>h-index</span></div>
     <div class="cc-stat"><b>${PUBLISHED.length}</b><span>publications</span></div>
-    <button class="holder citeagent" data-quip="Not a lot, but it's honest work.|Stop judging. He's not that old yet.|Every citation was earned. Some were even read.|h-index 1. Rome wasn't cited in a day.|Give him until the PhD is done.">${agent("", `<span class="bubble"></span>`)}</button>
+    <button class="holder citeagent" aria-label="An agent with opinions about the citation count" data-quip="Not a lot, but it's honest work.|Stop judging. He's not that old yet.|Every citation was earned. Some were even read.|h-index 1. Rome wasn't cited in a day.|Give him until the PhD is done.">${agent("", `<span class="bubble"></span>`)}</button>
     <p class="cc-note hand">counted live from OpenAlex · tap the agent</p>
   </div>
   <p class="lede rise" style="margin-top:34px">Five projects, each pinned to its own plate. Every plate has a one-line version for people who won't read the PDF.</p>
@@ -358,9 +358,9 @@ about: () => `
   <div class="section rise">
     <div class="sec-head"><h3>Languages</h3></div>
     <div class="langs">
-      <div class="lang">${holder("f-de", "Natürlich.|Ordnung muss sein.|Feierabend? Not before the deadline.|Das ist nicht mein Bier. But I'll negotiate for it.|I have a form for that.")}German</div>
-      <div class="lang">${holder("f-pl", "Oczywiście!|Pierogi first, then negotiations.|Na zdrowie!|My grandmother out-negotiates every model.|Żubrówka is a valid BATNA.")}Polish</div>
-      <div class="lang">${holder("f-us", "Obviously. Go Blue!|Let's circle back on that.|Per my last email…|Awesome. Super awesome.|Can we take this offline?")}English</div>
+      <div class="lang">${holder("f-de", "Natürlich.|Ordnung muss sein.|Feierabend? Not before the deadline.|Das ist nicht mein Bier. But I'll negotiate for it.|I have a form for that.", "An agent waving a German flag")}German</div>
+      <div class="lang">${holder("f-pl", "Oczywiście!|Pierogi first, then negotiations.|Na zdrowie!|My grandmother out-negotiates every model.|Żubrówka is a valid BATNA.", "An agent waving a Polish flag")}Polish</div>
+      <div class="lang">${holder("f-us", "Obviously. Go Blue!|Let's circle back on that.|Per my last email…|Awesome. Super awesome.|Can we take this offline?", "An agent waving an English flag")}English</div>
     </div>
   </div>
   <div class="section rise">
