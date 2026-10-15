@@ -149,6 +149,126 @@ function initHome(){
   const perch = stage.querySelector(".perch");
   if (perch) perch.addEventListener("click", () => say(perch, pick(PERCH)));
   startGround();
+  initRunner();
+  initNow();
+}
+
+/* Fig. 2 game: one agent runs the gauntlet of academic life. Space, tap or click to jump. */
+const HURDLES = ["Reviewer 2", "Deadline", "Ethics form", "Unread email", "R&R", "Zoom call", "Reviewer 3?", "Rejection", "Low battery"];
+const RUN_OVER = ["Reviewer 2 strikes again.", "Major revisions. Again.", "Desk-rejected.", "Please resubmit in six months.", "Have you considered another journal?"];
+function initRunner(){
+  const g = document.getElementById("ground"), btn = document.getElementById("playBtn"), hud = document.getElementById("hud");
+  if (!g || !btn) return;
+  const player = g.querySelector(".agent"), PX = 36, JUMP = 660, GRAV = 2000;
+  const best = () => { try { return +localStorage.getItem("runBest") || 0; } catch (e) { return 0; } };
+  let st = null, listening = false;
+
+  const label = on => { btn.setAttribute("aria-pressed", on); btn.querySelector(".lbl").textContent = on ? "stop" : "play"; };
+  const showHud = () => { hud.hidden = false; hud.textContent = `citations ${st.score} · best ${best()}`; };
+
+  function reset(){
+    g.querySelectorAll(".obst").forEach(o => o.remove());
+    Object.assign(st, { y: 0, vy: 0, speed: 280, dist: 0, next: 120, obs: [], score: 0, over: false, t: performance.now() });
+    player.style.bottom = "0"; player.classList.add("walk");
+    player.querySelector(".bubble").classList.remove("on");
+    showHud(); requestAnimationFrame(loop);
+  }
+  function start(){
+    st = { home: player.style.left };
+    g.classList.add("gaming"); player.classList.add("player"); player.classList.remove("flip");
+    player.style.left = PX + "px"; label(true);
+    if (!listening){ document.addEventListener("keydown", key); listening = true; }
+    reset();
+  }
+  function stop(){
+    if (!st) return;
+    g.classList.remove("gaming"); player.classList.remove("player"); player.classList.add("walk");
+    g.querySelectorAll(".obst").forEach(o => o.remove());
+    player.style.left = st.home; player.style.bottom = ""; hud.hidden = true; label(false);
+    document.removeEventListener("keydown", key); listening = false; st = null;
+  }
+  function jump(){
+    if (!st) return;
+    if (st.over){ reset(); return; }
+    if (st.y === 0) st.vy = JUMP;
+  }
+  function key(e){
+    if (!st) return;
+    if (e.key === "Escape") return stop();
+    if (e.code === "Space" || e.key === "ArrowUp"){ e.preventDefault(); jump(); }
+  }
+  function die(){
+    st.over = true; player.classList.remove("walk");
+    if (st.score > best()){ try { localStorage.setItem("runBest", st.score); } catch (e) {} }
+    say(player, pick(RUN_OVER), 2600);
+    hud.textContent = `citations ${st.score} · best ${best()} · tap to retry`;
+  }
+  function loop(now){
+    if (!st || st.over) return;
+    if (!g.isConnected) return stop();
+    const dt = Math.min(.05, (now - st.t) / 1000); st.t = now;
+    st.speed = Math.min(640, 280 + st.dist * .04);
+    st.dist += st.speed * dt; st.score = Math.floor(st.dist / 45);
+    st.vy -= GRAV * dt; st.y = Math.max(0, st.y + st.vy * dt); if (st.y === 0) st.vy = 0;
+    player.style.bottom = st.y + "px";
+    if (st.dist >= st.next){
+      const el = document.createElement("span"); el.className = "obst"; el.textContent = pick(HURDLES); g.appendChild(el);
+      st.obs.push({ el, x: g.clientWidth, w: el.offsetWidth });
+      st.next = st.dist + 320 + Math.random() * 320 + st.speed * .4;
+    }
+    for (const o of st.obs){
+      o.x -= st.speed * dt; o.el.style.left = o.x + "px";
+      if (o.x + o.w - 4 > PX + 10 && o.x + 4 < PX + 22 && st.y < 22) return die();
+    }
+    st.obs = st.obs.filter(o => o.x > -o.w - 10 || (o.el.remove(), false));
+    hud.textContent = `citations ${st.score} · best ${Math.max(best(), st.score)}`;
+    requestAnimationFrame(loop);
+  }
+
+  btn.addEventListener("click", () => st ? stop() : start());
+  g.addEventListener("pointerdown", e => { if (st){ e.preventDefault(); jump(); } });
+}
+
+/* "Aarhus right now": local time, live weather, and a verdict from the nearest agent. */
+const SKY = c => c === 0 ? "clear" : c <= 2 ? "partly cloudy" : c === 3 ? "overcast" : c <= 48 ? "fog" : c <= 57 ? "drizzle" : c <= 67 ? "rain" : c <= 77 ? "snow" : c <= 82 ? "showers" : c <= 86 ? "snow showers" : "thunder";
+function nowVerdict(h, d, w){
+  const wet = w && [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code);
+  if (d === "Thu" && h >= 18 && h < 23) return "Quiz night o'clock. Bring snacks and a team name.";
+  if (wet) return "Rain again. The bike has opinions.";
+  if (h < 6) return "Why is anyone awake? Even the agents are idle.";
+  if (h < 9) return "Coffee first. Then science.";
+  if (h < 12) return "Prime thinking hours. Meetings are the enemy.";
+  if (h < 14) return "Lunch. The cafeteria is a negotiation.";
+  if (h < 18) return "Afternoon slump. A pastry would fix this.";
+  if (h < 22) return "Evening. Dough is probably rising somewhere.";
+  return "Late. The paper can wait until tomorrow.";
+}
+async function initNow(){
+  const card = document.getElementById("nowcard"); if (!card) return;
+  const $ = id => card.querySelector("#" + id), w = {};
+  const paint = () => {
+    if (!card.isConnected) return;
+    const n = new Date(), tz = { timeZone: "Europe/Copenhagen" };
+    const hm = n.toLocaleTimeString("en-GB", { ...tz, hour: "2-digit", minute: "2-digit" });
+    const day = n.toLocaleDateString("en-GB", { ...tz, weekday: "short" });
+    $("now-time").textContent = hm;
+    $("now-day").textContent = n.toLocaleDateString("en-GB", { ...tz, weekday: "long", day: "numeric", month: "long" });
+    const v = nowVerdict(+hm.slice(0, 2), day, w.code === undefined ? null : w);
+    $("now-agent").dataset.quip = v;
+    $("now-note").textContent = v;
+  };
+  paint(); const iv = setInterval(() => card.isConnected ? paint() : clearInterval(iv), 30000);
+  try {
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=56.16&longitude=10.2&current=temperature_2m,weather_code,wind_speed_10m&wind_speed_unit=ms");
+    const c = (await r.json()).current;
+    w.code = c.weather_code;
+    $("now-temp").textContent = Math.round(c.temperature_2m) + "°C";
+    $("now-sky").textContent = SKY(c.weather_code);
+    $("now-wind").textContent = Math.round(c.wind_speed_10m) + " m/s";
+    paint();
+  } catch (e) {
+    $("now-temp").textContent = "?"; $("now-sky").textContent = "window is foggy"; $("now-wind").textContent = "?";
+  }
 }
 
 function startGround(){
@@ -157,13 +277,13 @@ function startGround(){
   const W = () => g.clientWidth - 32;
   const ws = els.map(el => ({ el, x: el.offsetLeft, v: (el.classList.contains("flip") ? -1 : 1) * (16 + Math.random() * 18), pause: 0, cool: 2 + Math.random() * 3 }));
   const talk = (w, text, s) => { w.pause = s; w.el.classList.remove("walk"); say(w.el, text, s * 1000); };
-  ws.forEach(w => w.el.addEventListener("click", e => { e.stopPropagation(); talk(w, pick(LINES), 3.2); }));
+  ws.forEach(w => w.el.addEventListener("click", e => { e.stopPropagation(); if (!g.classList.contains("gaming")) talk(w, pick(LINES), 3.2); }));
   if (reduce()){ ws.forEach(w => w.el.classList.remove("walk")); return; }
   let last = performance.now();
   function tick(t){
     if (!g.isConnected) return;
     const dt = Math.min(.05, (t - last) / 1000); last = t;
-    if (busy){ requestAnimationFrame(tick); return; }
+    if (busy || g.classList.contains("gaming")){ requestAnimationFrame(tick); return; }
     const max = W();
     for (const w of ws){
       w.cool -= dt;

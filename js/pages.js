@@ -48,7 +48,7 @@ const cityStamp = c => `<div class="citycard">
 const EXPERIENCE = {
   Work: [
     ["2026 – 2029", "PhD fellow, Aarhus University", "Department of Management, School of Business and Social Sciences. Researching AI agents in entrepreneurship and negotiation.", "now"],
-    ["2024 – now", "Co-founder, Discurso.AI", "AI negotiation training and assessment, used at universities in Europe, Australia and South America.", "now"],
+    ["2024 – now", "Co-founder & CEO, Discurso.AI", "AI negotiation training and assessment, used at universities in Europe, Australia and South America.", "now"],
     ["Apr – Aug 2024", "Co-founder, Languee", "An AI voice tutor that taught professionals foreign languages through spoken workplace conversations. Copenhagen."],
     ["2024", "Research assistant, Ludwig Boltzmann Gesellschaft", "Jan – Dec 2024."],
     ["2024", "Innovation intern, BMW Group", "May – Aug 2024."],
@@ -135,6 +135,7 @@ const SHELF = [
     { slug: "toto-iv", title: "Toto IV", author: "Toto", kind: "music", c: "#B8282A", note: "Africa, and everything else on it.", quip: "Africa is stuck in my head. Send help." },
     { slug: "1989-taylors-version", title: "1989 (Taylor's Version)", author: "Taylor Swift", kind: "music", c: "#A8C8E8", note: "The seagull album.", quip: "Shake it off. Then renegotiate the contract." },
     { slug: "slippery-when-wet", title: "Slippery When Wet", author: "Bon Jovi", kind: "music", c: "#2A2A2A", note: "Eighties hair, nineties negotiating.", quip: "Livin' on a prayer. Also on a BATNA." },
+    { slug: "like-a-prayer", title: "Like a Prayer", author: "Madonna", kind: "music", c: "#4A6A9A", note: "Express yourself, and the title track.", quip: "Express yourself. Then state your reservation price." },
     { title: "album", kind: "empty music", quip: "My playlist is just modem noises." },
   ] },
   { label: "Games", items: [ // add  tag: "currently playing"  to the one you're playing
@@ -159,7 +160,7 @@ home: () => `
       <div class="kicker sc">Field notes · vol. I · Aarhus, 2026</div>
       <h1 style="margin-top:12px">Jan Smolinski</h1>
       <p class="lede">I study what happens when <mark>AI agents</mark> start companies, answer interview questions and negotiate with each other. I also <button class="build-one" data-go="projects">build them${blob("peek")}</button>.</p>
-      <p class="byline">PhD fellow · Department of Management · Aarhus University</p>
+      <p class="byline">PhD fellow · Department of Management · Aarhus University<br>Co-founder &amp; CEO · <a href="https://discurso.ai" target="_blank" rel="noopener">Discurso.AI</a></p>
     </div>
     <div class="hero-photo rise" style="--d:.1s">
       ${agent("perch track", `<span class="bubble"></span>`, "button", `aria-label="An agent sitting on the photo"`)}
@@ -168,10 +169,27 @@ home: () => `
   </header>
 
   <section class="observe rise" style="--d:.2s">
-    <div class="ground" id="ground">
-      ${[6, 22, 40, 57, 74, 90].map((x, i) => agent(`wander walk ${i % 2 ? "flip" : ""}`, `<span class="bubble"></span>`, "button", `style="left:${x}%" aria-label="Agent ${i + 1}: tap to hear what it is doing"`)).join("")}
+    <div class="observe-row">
+      <div class="ground" id="ground">
+        ${[6, 22, 40, 57, 74, 90].map((x, i) => agent(`wander walk ${i % 2 ? "flip" : ""}`, `<span class="bubble"></span>`, "button", `style="left:${x}%" aria-label="Agent ${i + 1}: tap to hear what it is doing"`)).join("")}
+        <span class="hud hand" id="hud" hidden></span>
+      </div>
+      <button class="play" id="playBtn" type="button" aria-pressed="false"><span class="tri" aria-hidden="true"></span><span class="lbl">play</span></button>
     </div>
-    <p class="figcap"><b>Fig. 2.</b> Six agents observed in the wild, mid-afternoon. Tap one to interview it.</p>
+    <p class="figcap"><b>Fig. 2.</b> Six agents observed in the wild, mid-afternoon. Tap one to interview it, or press play and see how long one lasts in peer review.</p>
+  </section>
+
+  <section class="section rise" style="--d:.25s">
+    <div class="nowcard" id="nowcard">
+      <div class="now-head"><span class="sc">Aarhus, right now</span><span class="hand" id="now-note">checking the window…</span></div>
+      <div class="now-grid">
+        <div class="cc-stat"><b id="now-time">··:··</b><span id="now-day">local time</span></div>
+        <div class="cc-stat"><b id="now-temp">·</b><span id="now-sky">sky</span></div>
+        <div class="cc-stat"><b id="now-wind">·</b><span>wind</span></div>
+        <button class="holder" id="now-agent" data-quip="">${agent("", `<span class="bubble"></span>`)}</button>
+      </div>
+      <p class="cc-note hand">weather from open-meteo · tap the agent for the local verdict</p>
+    </div>
   </section>
 
   <section class="section split solo">

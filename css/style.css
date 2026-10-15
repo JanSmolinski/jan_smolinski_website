@@ -657,3 +657,22 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .aarhus .photo:nth-child(2) img{object-position:50% 40%}
 .aarhus .photo:nth-child(3) img{object-position:42% 45%}
 .venture.retired{grid-column:1/-1}
+
+/* Aarhus right now */
+.nowcard{position:relative;margin-top:10px;padding:18px 22px 12px;background:var(--paper-2);border:1px solid var(--line);transform:rotate(.4deg);box-shadow:3px 4px 14px color-mix(in srgb,var(--ink) 10%,transparent)}
+.now-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.now-head .hand{font-size:22px;transform:rotate(-1deg)}
+.now-grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 34px;margin-top:10px}
+.now-grid .cc-stat b{font-size:34px;min-width:2.2ch;display:block}
+
+/* Fig. 2 runner game */
+.observe-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end}
+.play{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-hand);font-size:23px;line-height:1;color:var(--pen);background:var(--paper-2);border:1.5px solid var(--ink);border-radius:4px;padding:3px 13px 5px;cursor:pointer;transform:rotate(2deg);box-shadow:2px 2px 0 color-mix(in srgb,var(--ink) 14%,transparent);margin-bottom:6px;transition:transform .15s}
+.play:hover{transform:rotate(-1deg) translateY(-1px)}
+.play .tri{width:0;height:0;border-left:10px solid var(--rust);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.play[aria-pressed="true"] .tri{width:10px;height:10px;border:0;background:var(--rust)}
+.hud{position:absolute;top:0;right:4px;font-size:22px;color:var(--ink-2);pointer-events:none;z-index:6;text-align:right}
+.ground.gaming{cursor:pointer;touch-action:manipulation;user-select:none}
+.ground.gaming .agent:not(.player){opacity:0;pointer-events:none;transition:opacity .25s}
+.obst{position:absolute;bottom:0;height:30px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;font-family:var(--f-hand);font-size:19px;color:var(--rust);background:var(--paper-2);border:1.5px solid var(--rust);border-radius:3px;transform:rotate(-1deg);pointer-events:none}
+@media (max-width:600px){.play{font-size:20px;padding:2px 10px 4px}}
