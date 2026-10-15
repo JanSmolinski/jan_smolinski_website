@@ -193,9 +193,6 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 
 /* talks */
 .stamps{display:flex;gap:26px;flex-wrap:wrap}
-.postmark{width:150px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:15px;color:var(--ink-2)}
-.postmark .ring{width:118px;height:118px;border-radius:50%;border:1.5px dashed var(--faint);display:grid;place-items:center;padding:16px;transform:rotate(-8deg);color:var(--faint);font-variant-caps:all-small-caps;letter-spacing:.08em;line-height:1.2;font-size:15px;overflow:hidden;background:var(--paper-2)}
-.postmark .ring img{width:100%;height:100%;object-fit:contain;transform:rotate(8deg)}
 
 /* ---------- ventures ---------- */
 .ventures{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:34px}
@@ -416,10 +413,6 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .epitaph{font-family:var(--f-hand);color:var(--ink-2);font-size:19px}
 .talk-photos{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:34px;align-items:center;margin-bottom:36px}
 @media (max-width:780px){.talk-photos{grid-template-columns:minmax(0,1fr)}}
-.postmark .ring{color:var(--rust);border-color:color-mix(in srgb,var(--rust) 60%,transparent);border-style:solid;box-shadow:inset 0 0 0 4px var(--paper-2),inset 0 0 0 5px color-mix(in srgb,var(--rust) 45%,transparent)}
-.pm-text{font-variant-caps:all-small-caps;letter-spacing:.08em;line-height:1.15;font-size:14px}
-.pm-text b{font-weight:600;font-size:16px}
-.postmark:nth-child(2n) .ring{transform:rotate(7deg)}
 .cv .tag{display:inline-block;margin-left:10px;font-variant-caps:all-small-caps;letter-spacing:.08em;font-size:14px;padding:0 7px 1px;border:1px solid currentColor;border-radius:3px;vertical-align:2px;color:var(--faint)}
 .cv .r.live .tag{color:var(--sage)}
 .cv .r.live .tag::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:5px;vertical-align:1px;animation:think 1.4s steps(2) infinite}
@@ -556,13 +549,34 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .citeagent .agent{--aw:32px}
 .cc-note{flex-basis:100%;margin:0;font-size:17px;color:var(--pen)}
 /* conference city cards */
-.stamps{gap:34px 22px}
-.citycard{position:relative;width:176px;display:flex;flex-direction:column;align-items:center;gap:2px}
-.citycard .city{width:164px;height:auto;overflow:visible;filter:url(#ink)}
-.citycard .city path,.citycard .city circle,.citycard .city rect,.citycard .city ellipse{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* five across when there is room, otherwise 3 + 2, and 2 per row on phones; short rows sit centred */
+.stamps{gap:48px 26px;justify-content:center;padding-top:30px;container-type:inline-size}
+.citycard{position:relative;flex:0 1 calc((100% - 4*26px)/5);max-width:190px;display:flex;flex-direction:column;align-items:center;padding:6px 6px 0;transform:rotate(var(--tilt,0deg))}
+@container (width < 700px){.citycard{flex-basis:calc((100% - 2*26px)/3)}}
+@container (width < 400px){.citycard{flex-basis:calc((100% - 26px)/2)}}
+.citycard .city{width:100%;height:auto;overflow:visible;filter:url(#ink);display:block}
+.citycard .city path,.citycard .city circle,.citycard .city rect,.citycard .city ellipse{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .citycard .city .a{stroke:var(--rust)}
-.citycard .postmark{width:168px}
+/* the stamp: paper with perforated (scalloped) edges cut out by a mask; the shadow sits on the unmasked wrapper */
+.pstamp-wrap{position:relative;width:100%;filter:drop-shadow(1px 2px 2px color-mix(in srgb,var(--ink) 22%,transparent))}
+.pstamp{--h:4px;position:relative;padding:calc(var(--h)*2.4);background:var(--paper-2);
+  mask:radial-gradient(var(--h),#0000 98%,#000) round calc(var(--h)*-1.5) calc(var(--h)*-1.5)/calc(var(--h)*3) calc(var(--h)*3),
+    linear-gradient(#000 0 0) no-repeat 50%/calc(100% - var(--h)*3) calc(100% - var(--h)*3)}
+.pstamp::before{content:"";position:absolute;inset:calc(var(--h)*2.4 - 4px);border:1px solid color-mix(in srgb,var(--rust) 55%,transparent);pointer-events:none}
+.pstamp .city{padding:12px 2px 0}
+.pst-name em{display:block;font-style:italic;font-variant-caps:normal;letter-spacing:.01em;font-weight:400;font-size:16px;color:var(--ink);margin-top:2px}
+.pst-name{display:block;text-align:center;font-variant-caps:all-small-caps;letter-spacing:.1em;font-size:16px;line-height:1.05;font-weight:500;color:var(--rust);padding:5px 4px 6px;text-wrap:balance}
+/* the cancellation: a round postmark plus wavy lines, inked over the top-right corner */
+.cancel{position:absolute;right:-34px;top:-34px;width:104px;height:auto;overflow:visible;transform:rotate(-14deg);opacity:.78;pointer-events:none;mix-blend-mode:multiply}
+.cancel circle,.cancel .wavy{fill:none;stroke:var(--pen);stroke-width:1.3}
+.cancel circle+circle{stroke-width:.8}
+.cancel text{fill:var(--pen);font-family:var(--f-serif)}
+.cancel .ringtxt{font-size:10px;font-weight:600}
+.cancel .yr{font-size:15px;font-weight:600;letter-spacing:.04em}
+:root[data-theme="dark"] .cancel{mix-blend-mode:normal}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cancel{mix-blend-mode:normal}}
 .cityagent{position:absolute;right:-6px;top:56px;padding-top:0}
+.citycard .cityagent{right:-8px;top:auto;bottom:-14px;z-index:2}
 .cityagent .agent{--aw:24px}
 .cityagent .bubble{font-size:16px;white-space:normal;width:max-content;max-width:190px;text-align:center}
 
@@ -665,7 +679,7 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .now-grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 34px;margin-top:10px}
 .now-grid .cc-stat b{font-size:34px;min-width:2.2ch;display:block}
 
-/* Fig. 2 runner game */
+/* Fig. 1 runner game */
 .observe-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end}
 .play{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-hand);font-size:23px;line-height:1;color:var(--pen);background:var(--paper-2);border:1.5px solid var(--ink);border-radius:4px;padding:3px 13px 5px;cursor:pointer;transform:rotate(2deg);box-shadow:2px 2px 0 color-mix(in srgb,var(--ink) 14%,transparent);margin-bottom:6px;transition:transform .15s}
 .play:hover{transform:rotate(-1deg) translateY(-1px)}
@@ -676,3 +690,11 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .ground.gaming .agent:not(.player){opacity:0;pointer-events:none;transition:opacity .25s}
 .obst{position:absolute;bottom:0;height:30px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;font-family:var(--f-hand);font-size:19px;color:var(--rust);background:var(--paper-2);border:1.5px solid var(--rust);border-radius:3px;transform:rotate(-1deg);pointer-events:none}
 @media (max-width:600px){.play{font-size:20px;padding:2px 10px 4px}}
+
+/* reviewing: same taped card as teaching, journals as links, agent with a red pen */
+.reviewing{transform:rotate(.5deg)}
+.courses a{color:inherit;text-decoration-color:color-mix(in srgb,var(--pen) 40%,transparent);text-underline-offset:4px}
+.courses a:hover{color:var(--rust)}
+.courses .pub-house{font-family:var(--f-serif);font-style:italic;font-size:15px;color:var(--faint);margin-left:4px}
+.reviewing .agent svg.ov{position:absolute;left:0;top:0;width:100%;height:auto;pointer-events:none}
+.reviewing .pen path{stroke:var(--rust);stroke-width:2.2;stroke-linecap:round;fill:none}

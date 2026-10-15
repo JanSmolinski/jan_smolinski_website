@@ -21,16 +21,21 @@ const PUBLISHED = [
   ["2024", "Neue Horizonte im Innovationsmanagement – Forschungsimpulse für die Praxis", "Springer Nature, in German", "Book chapter", "Smolinski J., Smolinski R.", "10.1007/978-3-658-44894-3_1"],
   ["2024", "Nachhaltiges Innovationsmanagement: Ideen aus Theorie und Praxis für langfristigen Erfolg", "Springer Nature, in German", "Book chapter", "Smolinski R., Smolinski J., Warecka Z.", "10.1007/978-3-658-44894-3_15"],
 ];
+/* Journals reviewed for: [journal, link]. Shown on Research and Experience. */
+const REVIEWING = [
+  ["AI and Ethics", "https://link.springer.com/journal/43681"],
+  ["AI & Society", "https://link.springer.com/journal/146"],
+];
 const pubTitle = p => p[5] ? `<a href="${p[5].startsWith("http") ? p[5] : "https://doi.org/" + p[5]}" target="_blank" rel="noopener">${p[1]}</a>` : p[1];
 
 
 /* Simple one-line city sketches for the conference stamps. */
 const CITY = {
-  vienna: `<g opacity=".4"><circle cx="112" cy="48" r="23"/><circle cx="112" cy="48" r="2"/><path d="M112 48 L135.0 48.0 M112 48 L131.9 59.5 M112 48 L123.5 67.9 M112 48 L112.0 71.0 M112 48 L100.5 67.9 M112 48 L92.1 59.5 M112 48 L89.0 48.0 M112 48 L92.1 36.5 M112 48 L100.5 28.1 M112 48 L112.0 25.0 M112 48 L123.5 28.1 M112 48 L131.9 36.5"/><path d="M104 80 L112 50 L120 80"/></g><path d="M6 80 H134"/><path d="M26 46 L33 8 L40 46"/><path d="M33 3 V8 M31 5.5 H35" class="a"/><path d="M30 24 H36 M28.6 34 H37.4 M33 8 V46" opacity=".6"/><path d="M26 46 V80 H40 V46"/><path d="M30 56 V50 Q33 46 36 50 V56 M30 70 V62 Q33 58 36 62 V70"/><path d="M40 62 L48 46 H96 L106 62 V80 H40"/><path d="M44 58 L51 49 L58 58 L65 49 L72 58 L79 49 L86 58 L93 49 L102 58" /><path d="M48 76 V68 Q52 63 56 68 V76 M62 76 V68 Q66 63 70 68 V76 M76 76 V68 Q80 63 84 68 V76 M90 76 V68 Q94 63 98 68 V76" opacity=".7"/>`,
-  paris: `<path d="M6 80 H134"/><path d="M70 3 V15"/><path d="M68.2 15 C67.5 34 62 56 51 80 M71.8 15 C72.5 34 78 56 89 80"/><path d="M68.2 15 H71.8"/><path d="M66.8 26 H73.2 M66.6 27.6 H73.4"/><path d="M63.4 41 H76.6 M63 43 H77"/><path d="M57 58 H83 M56.2 60.2 H83.8"/><path d="M66.8 26 L73 41 M73.2 26 L66.8 41 M63.4 43 L76.6 58 M76.6 43 L63.4 58 M56.5 60 L70 78 M83.5 60 L70 78" opacity=".75"/><path d="M58.5 80 C60 64 80 64 81.5 80"/><path d="M62 80 C63 70 77 70 78 80" opacity=".6"/><path class="a" d="M70 3 l7 2.5 l-7 2.5"/><path d="M16 80 V68 H34 V80 M18 68 V64 H32 V68 M104 80 V70 H124 V80 M107 70 V66 H121 V70" opacity=".55"/><path d="M12 44 q3 -3 6 0 q3 -3 6 0 M112 30 q3 -3 6 0 q3 -3 6 0" opacity=".5"/>`,
-  online: `<path d="M20 70 H120 L112 62 H28 Z"/><rect x="30" y="16" width="80" height="46" rx="3"/><path d="M70 18 V60 M32 39 H108" opacity=".5"/><circle cx="50" cy="26" r="4.2"/><path d="M42 37 Q50 28 58 37"/><circle cx="90" cy="26" r="4.2"/><path d="M82 37 Q90 28 98 37"/><circle cx="50" cy="49" r="4.2"/><path d="M42 60 Q50 51 58 60"/><circle cx="90" cy="49" r="4.2"/><path d="M82 60 Q90 51 98 60"/><circle class="a" cx="103" cy="22" r="1.8"/>`,
-  capetown: `<path d="M4 80 H136" opacity="0"/><path d="M2 76 C8 66 12 54 26 48 C32 45 36 48 38 52"/><path d="M30 76 L42 40 H110 L130 76"/><path d="M50 40 L46 76 M62 40 L60 76 M76 40 L76 76 M90 40 L94 76 M102 40 L110 76" opacity=".35"/><path class="a" d="M38 40 q6 -10 16 -6 q8 -10 20 -4 q12 -8 22 2 q10 -2 14 8"/><path class="a" d="M50 40 v5 M68 38 v9 M88 40 v7 M104 40 v4"/><path d="M2 82 q6 -5 12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0" opacity=".6"/><ellipse cx="116" cy="74" rx="5" ry="8"/><path d="M111.5 72 q-4 2 -5 6 M120.5 72 q4 2 5 6"/><path class="a" d="M116 66 l3 -1.4 l-3 -1 Z"/><circle cx="114.6" cy="69" r=".7"/><path d="M112 82 h3 M117 82 h3"/>`,
-  milan: `<path d="M6 80 H134"/><path d="M18 80 V46 L70 26 L122 46 V80"/><path d="M21.8 44.7 L24 28.7 L26.2 44.7 M24 28.7 V24.7 M24 44.7 V80 M35.8 39.3 L38 23.3 L40.2 39.3 M38 23.3 V19.3 M38 39.3 V80 M49.8 33.9 L52 17.9 L54.2 33.9 M52 17.9 V13.9 M52 33.9 V80 M85.8 33.9 L88 17.9 L90.2 33.9 M88 17.9 V13.9 M88 33.9 V80 M99.8 39.3 L102 23.3 L104.2 39.3 M102 23.3 V19.3 M102 39.3 V80 M113.8 44.7 L116 28.7 L118.2 44.7 M116 28.7 V24.7 M116 44.7 V80 "/><path d="M70 26 V6 M67.5 26 L70 10 L72.5 26 M68.5 14 H71.5"/><circle class="a" cx="70" cy="4" r="1.6"/><path d="M60 80 V62 Q70 46 80 62 V80 M65 80 V64 Q70 54 75 64 V80"/><path d="M28 70 V62 Q31 57 34 62 V70 M42 70 V62 Q45 57 48 62 V70 M92 70 V62 Q95 57 98 62 V70 M106 70 V62 Q109 57 112 62 V70"/><path d="M22 52 H118" opacity=".5"/><path d="M122 80 h6 M12 80 h-6" opacity="0"/>`,
+  vienna: `<path d="M4 82 H136"/><path d="M26 82 V48 H42 V82"/><path d="M26 48 L34 6 L42 48"/><path d="M34 6 V1 M32 3 H36" class="a"/><path d="M27.5 14 l-1.6 -1.4 M40.5 14 l1.6 -1.4 M29 22 l-1.6 -1.4 M39 22 l1.6 -1.4 M30.6 30 l-1.6 -1.4 M37.4 30 l1.6 -1.4 M32.1 38 l-1.6 -1.4 M35.9 38 l1.6 -1.4" opacity=".7"/><path d="M30.5 40 H37.5 M29 30 H39 M31.5 20 H36.5" opacity=".45"/><path d="M30 64 V56 Q34 50 38 56 V64 M31 78 V70 Q34 66 37 70 V78"/><path d="M42 82 V58 H92 V82"/><path d="M42 58 L50 34 H86 L92 58"/><path class="a" d="M50 42 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 M48 50 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3" opacity=".85"/><path d="M47 78 V68 Q50 63 53 68 V78 M59 78 V68 Q62 63 65 68 V78 M71 78 V68 Q74 63 77 68 V78 M83 78 V68 Q86 63 89 68 V78" opacity=".7"/><circle cx="116" cy="42" r="21"/><circle cx="116" cy="42" r="18" opacity=".5"/><circle cx="116" cy="42" r="1.8"/><path d="M116 42 L134 42 M116 42 L132.6 48.9 M116 42 L128.7 54.7 M116 42 L122.9 58.6 M116 42 L116 60 M116 42 L109.1 58.6 M116 42 L103.3 54.7 M116 42 L99.4 48.9 M116 42 L98 42 M116 42 L99.4 35.1 M116 42 L103.3 29.3 M116 42 L109.1 25.4 M116 42 L116 24 M116 42 L122.9 25.4 M116 42 L128.7 29.3 M116 42 L132.6 35.1" opacity=".55"/><path class="a" d="M135 42.6 h4 v3 h-4Z M128.8 57.4 h4 v3 h-4Z M114 63.6 h4 v3 h-4Z M99.2 57.4 h4 v3 h-4Z M93 42.6 h4 v3 h-4Z M99.2 27.8 h4 v3 h-4Z M114 21.6 h4 v3 h-4Z M128.8 27.8 h4 v3 h-4Z"/><path d="M104 82 L116 42 L128 82 M108 72 H124"/>`,
+  paris: `<path d="M4 82 H136"/><path d="M70 6 C69 30 62 56 46 82 M70 6 C71 30 78 56 94 82"/><path d="M57 82 Q57 66 70 64 Q83 66 83 82"/><path d="M55.5 60 H84.5 M57.8 57 H82.2"/><path d="M63.1 38 H76.9 M64.7 35.6 H75.3"/><path d="M67 18 H73 M68.2 16.4 H71.8"/><path d="M57.5 60 L74.9 38 M82.5 60 L65.1 38 M65.1 38 L71 18 M74.9 38 L69 18 M69 18 L70.1 8 M71 18 L69.9 8 M52 80 L82.5 60 M88 80 L57.5 60" opacity=".5"/><path class="a" d="M70 6 V0"/><path d="M12 82 V62 H36 V82 M18 82 V73 Q24 66 30 73 V82 M11 62 H37 M12 66 H36" /><path d="M102 88 q5 -3 10 0 t10 0 t10 0 M98 84 q4 -2.5 8 0" opacity=".5"/><path d="M110 46 q3 -3 6 0 q3 -3 6 0 M16 40 q3 -3 6 0 q3 -3 6 0" opacity=".45"/>`,
+  online: `<path d="M16 72 H124 L114 63 H26 Z"/><path d="M62 68 H78" opacity=".6"/><rect x="28" y="14" width="84" height="49" rx="3"/><rect x="31" y="17" width="78" height="43" rx="1.5" opacity=".5"/><path d="M70 17 V60 M31 38.5 H109" opacity=".45"/><circle cx="50" cy="25" r="4.2"/><path d="M42 37 Q50 27 58 37"/><circle cx="90" cy="25" r="4.2"/><path d="M82 37 Q90 27 98 37"/><circle cx="50" cy="47" r="4.2"/><path d="M42 59 Q50 49 58 59"/><path d="M90 41 C95.5 41 98 45 98 49 C98 53.5 94.5 56 90 56 C85.5 56 82 53.5 82 49 C82 45 84.5 41 90 41Z"/><circle cx="92.5" cy="47.5" r="2"/><path d="M90.5 41 C90.5 38.5 92 37.5 93.5 36.5"/><circle class="a" cx="94" cy="36.2" r="1.2"/><path class="a" d="M118 10 a8 8 0 0 1 12 0 M120.5 13 a4.5 4.5 0 0 1 7 0"/><circle class="a" cx="124" cy="16" r="1"/>`,
+  capetown: `<path d="M2 74 L10 66 L18 42 L24 50 L30 38 H106 L112 58 L117 55 Q121 38 128 46 Q132 52 138 74"/><path d="M38 40 L38 60 M46 40 L45 60 M54 40 L52 60 M62 40 L62 60 M70 40 L69 60 M78 40 L76 60 M86 40 L86 60 M94 40 L93 60 M102 40 L100 60" opacity=".3"/><path class="a" d="M28 38 q4 -7 11 -4 q5 -8 13 -3 q7 -7 14 -1 q7 -7 14 0 q6 -6 13 0 q5 -4 9 3"/><path class="a" d="M36 39 v4 M48 39 v6 M60 39 v3 M72 39 v5 M84 39 v4 M96 39 v6" opacity=".7"/><path d="M14 74 V70 h5 v4 M22 74 V67 h4 v7 M30 74 V69 h6 v5 M40 74 V66 h4 v8 M48 74 V70 h7 v4 M100 74 V69 h5 v5 M108 74 V67 h4 v7" opacity=".55"/><path d="M2 74 H138"/><path d="M4 80 q5 -3 10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0 M12 87 q5 -3 10 0 t10 0 t10 0 t10 0 t10 0 t10 0" opacity=".5"/><ellipse cx="128" cy="80" rx="3.6" ry="5.6"/><path d="M125 79 q-2.5 1.5 -3 4 M131 79 q2.5 1.5 3 4"/><path class="a" d="M128 75.4 l2.4 -.8 l-2.4 -.8Z"/><path d="M126.5 86 h2 M128.5 86 h2"/>`,
+  milan: `<path d="M4 82 H136"/><path d="M66.5 30 L68.5 9 H71.5 L73.5 30" opacity=".8"/><path d="M68 18 H72 M67.5 24 H72.5" opacity=".5"/><path class="a" d="M70 8.6 l-1.8 -4.6 h3.6Z"/><circle class="a" cx="70" cy="2.6" r="1.2"/><path d="M14 82 V52 L70 30 L126 52 V82"/><path d="M18 82 V51 M15.8 51 L18 42 L20.2 51"/><circle cx="18" cy="40" r="1.3"/><path d="M36 82 V44 M33.8 44 L36 34 L38.2 44"/><circle cx="36" cy="32" r="1.3"/><path d="M54 82 V37 M51.8 37 L54 26 L56.2 37"/><circle cx="54" cy="24" r="1.3"/><path d="M86 82 V37 M83.8 37 L86 26 L88.2 37"/><circle cx="86" cy="24" r="1.3"/><path d="M104 82 V44 M101.8 44 L104 34 L106.2 44"/><circle cx="104" cy="32" r="1.3"/><path d="M122 82 V51 M119.8 51 L122 42 L124.2 51"/><circle cx="122" cy="40" r="1.3"/><path d="M20.2 49.6 l0 -3 M26.4 47.1 l0 -3 M32.7 44.7 l0 -3 M38.9 42.2 l0 -3 M45.1 39.8 l0 -3 M51.3 37.3 l0 -3 M57.6 34.9 l0 -3 M63.8 32.4 l0 -3 M119.8 49.6 l0 -3 M113.6 47.1 l0 -3 M107.3 44.7 l0 -3 M101.1 42.2 l0 -3 M94.9 39.8 l0 -3 M88.7 37.3 l0 -3 M82.4 34.9 l0 -3 M76.2 32.4 l0 -3" opacity=".55"/><path d="M63 82 V68 Q70 58 77 68 V82 M41 82 V72 Q45 66 49 72 V82 M91 82 V72 Q95 66 99 72 V82 M24 82 V74 Q27 70 30 74 V82 M110 82 V74 Q113 70 116 74 V82"/><path d="M42 64 V56 Q45 51 48 56 V64 M92 64 V56 Q95 51 98 56 V64 M65 58 V48 Q70 41 75 48 V58" opacity=".6"/><path d="M14 66 H126" opacity=".35"/>`,
 };
 const CITY_STAMPS = [
   { art: "vienna", slug: "iacm-2026", name: "IACM", place: "Vienna", year: "2026", quips: "Vienna: where every negotiation comes with cake.|I came for the Riesenrad. Stayed for the Sachertorte.|Waltzing into a distributive bargain." },
@@ -39,11 +44,25 @@ const CITY_STAMPS = [
   { art: "capetown", slug: "intra-2025", name: "INTRA", place: "Cape Town", year: "2025", quips: "Table Mountain has the flattest ask I've ever seen.|That cloud on top is just anchoring.|Best view of any conference. No contest." },
   { art: "milan", slug: "edtech-forum-2025", name: "EdTech Forum", place: "Milan", year: "2025", quips: "Aperitivo is the real negotiation table.|The Duomo has thousands of statues. Zero agents. Yet.|Espresso for everyone except Jan." },
 ];
-const cityStamp = c => `<div class="citycard">
-  <svg class="city" viewBox="0 0 140 90" aria-hidden="true">${CITY[c.art]}</svg>
-  ${postmark(c.slug, c.name, c.place, c.year)}
+/* A perforated postage stamp with the city sketch and conference name, cancelled by a postmark with the city and year. */
+const cityStamp = (c, i) => {
+  const ring = (c.place.length < 8 ? `${c.place} ★ ${c.place} ★ ` : `${c.place} ★ `).toUpperCase();
+  return `<div class="citycard" style="--tilt:${[-2.5, 1.8, -1.2, 2.4, -1.8][i % 5]}deg">
+  <span class="sr">${c.name}, ${c.place}, ${c.year}</span>
+  <div class="pstamp-wrap" aria-hidden="true"><div class="pstamp">
+    <svg class="city" viewBox="0 0 140 90">${CITY[c.art]}</svg>
+    <span class="pst-name">${c.name}<em>${c.place}</em></span>
+  </div>
+  <svg class="cancel" viewBox="0 0 120 80">
+    <path class="wavy" d="M8 31 q6 -4 12 0 t12 0 t12 0 M8 40 q6 -4 12 0 t12 0 t12 0 M8 49 q6 -4 12 0 t12 0 t12 0"/>
+    <circle cx="80" cy="40" r="35"/><circle cx="80" cy="40" r="23"/>
+    <path id="pm-${c.slug}" fill="none" stroke="none" d="M80 40 m-29 0 a29 29 0 1 1 58 0 a29 29 0 1 1 -58 0"/>
+    <text class="ringtxt"><textPath href="#pm-${c.slug}" textLength="178" lengthAdjust="spacing">${ring}</textPath></text>
+    <text class="yr" x="80" y="45" text-anchor="middle">${c.year}</text>
+  </svg></div>
   <button class="holder cityagent" aria-label="An agent with a comment about ${c.place}" data-quip="${esc(c.quips)}">${agent("", `<span class="bubble"></span>`)}</button>
 </div>`;
+};
 
 const EXPERIENCE = {
   Work: [
@@ -63,6 +82,9 @@ const EXPERIENCE = {
     ["2023 – 2025", "Double MSc, Bocconi University and Copenhagen Business School", "Economics and Management of Innovation and Technology (Bocconi) · Managing Innovation and Business Development (CBS)."],
     ["2022", "Exchange semester, University of Michigan", "Ann Arbor, Aug – Dec 2022."],
     ["2020 – 2023", "BSc Business Administration and Digital Management", "Copenhagen Business School. Valedictorian."],
+  ],
+  Reviewing: [
+    ["ad hoc", "Peer reviewer", REVIEWING.map(r => r[0]).join(" · ") + " (Springer)."],
   ],
   "Student life": [
     ["2023 – 2024", "Head of Events, CBS Motors", ""],
@@ -176,7 +198,7 @@ home: () => `
       </div>
       <button class="play" id="playBtn" type="button" aria-pressed="false"><span class="tri" aria-hidden="true"></span><span class="lbl">play</span></button>
     </div>
-    <p class="figcap"><b>Fig. 2.</b> Six agents observed in the wild, mid-afternoon. Tap one to interview it, or press play and see how long one lasts in peer review.</p>
+    <p class="figcap"><b>Fig. 1.</b> Six agents observed in the wild, mid-afternoon. Tap one to interview it, or press play and see how long one lasts in peer review.</p>
   </section>
 
   <section class="section rise" style="--d:.25s">
@@ -206,7 +228,7 @@ research: () => {
     ["outcomes-to-competencies", "From outcomes to competencies", "Working paper · with R. Smolinski", ["Working paper", "--faint"], "Can AI grade negotiation skill? Human raters barely agree with each other (α ≈ 0.08), so the paper argues for hybrid human–AI assessment. Back in the lab, collecting more data."],
     ["qatar-negotiation", "Qatari and Danish negotiators compared", "Negotiation studies in Qatar and Denmark · two studies, one dataset · with R. Smolinski, P. Kesting and A. R. Harmon", ["Awaiting ethics", "--faint"], "How negotiators in Qatar approach deals compared with Danish negotiators, and when an offer is good enough. Awaiting ethics approval."],
   ];
-  const roman = ["I", "II", "III", "IV", "V"];
+  const roman = ["III", "IV", "V", "VI", "VII"];
   return `
   <div class="kicker sc rise">p. 4 · Research · AI agents × entrepreneurship × negotiation</div>
   <h2 class="rise" style="margin-top:10px">Specimens under study</h2>
@@ -241,6 +263,13 @@ research: () => {
     <ol class="pubs">${PUBLISHED.map(p => `<li${p[5] && !p[5].startsWith("http") ? ` data-doi="${p[5].toLowerCase()}"` : ""}><span class="yr">${p[0]}</span><div><b>${pubTitle(p)}</b><p>${p[4]} · ${p[2]} · ${p[3]}<span class="cite"></span></p></div></li>`).join("")}</ol>
   </div>
   <div class="section rise">
+    <div class="sec-head"><h3>Reviewing</h3><span class="sc">peer review, from the other side</span></div>
+    <div class="teaching reviewing">
+      <ul class="courses">${REVIEWING.map(([j, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${j}</a> <span class="pub-house">Springer</span></li>`).join("")}</ul>
+      <button class="holder cityagent teacher" aria-label="An agent holding a red pen" data-quip="Jan is Reviewer 2 now. The circle is complete.|Minor revisions. He means it. Mostly.|He reads past the abstract. Every time.|Polite, thorough, and only one “have you considered”.|Peer review: the only negotiation with no BATNA.">${agent("arms", `<span class="bubble"></span><svg class="ov pen" viewBox="0 0 32 40" aria-hidden="true"><path d="M27.5 12.5 L31 3.5"/></svg>`)}</button>
+    </div>
+  </div>
+  <div class="section rise">
     <div class="sec-head"><h3>Teaching</h3><span class="sc">from the front of the room</span></div>
     <div class="teaching">
       <ul class="courses">
@@ -256,7 +285,7 @@ research: () => {
     <div class="sec-head"><h3>Talks and conferences</h3><span class="sc">postmarks from the road</span></div>
     <div class="talk-photos">
       ${photo({ src: "assets/photos/tnc-room.jpg", alt: "Jan presenting to a room of researchers", cap: "INTRA 2025, Cape Town. Presenting the scoring study", r: -1.2, ar: "3/2" })}
-      ${photo({ src: "assets/photos/tnc-hallway.jpg", alt: "Jan in conversation at the conference", cap: "the INTRA hallway track", r: 1.6, ar: "1/1" })}
+      ${photo({ src: "assets/photos/edtech-milan.jpg", alt: "Jan speaking into a microphone at a table, wearing a Bocconi lanyard", cap: "EdTech Forum 2025, Milan. Mid-argument", r: 1.6, ar: "4/3" })}
     </div>
     <div class="stamps">
       ${CITY_STAMPS.map(cityStamp).join("")}
@@ -295,7 +324,7 @@ projects: () => `
       </button>
       <span class="gawker l">${agent("", `<span class="bubble"></span>`)}</span>
       <span class="gawker r">${agent("flip", `<span class="bubble"></span>`)}</span>
-      <figcaption class="figcap"><b>Plate VI.</b> <i>Coachus discursivus</i>, the Discurso.AI coach. Kept under glass: the only specimen in this notebook that gives feedback. Tap the jar. Do not wiggle the lid.</figcaption>
+      <figcaption class="figcap"><b>Plate II.</b> <i>Coachus discursivus</i>, the Discurso.AI coach. Kept under glass: the only specimen in this notebook that gives feedback. Tap the jar. Do not wiggle the lid.</figcaption>
     </figure>
   </section>
   <div class="section ventures">
@@ -353,7 +382,7 @@ about: () => `
   <div class="section rise">
     <div class="sec-head"><h3>Expedition log</h3><span class="sc">Warsaw → Aarhus, so far</span></div>
     <div class="map" id="map"><div class="map-loading">Drawing the map…</div></div>
-    <p class="figcap"><b>Fig. 5.</b> Places lived and studied, from Warsaw (star) to Aarhus. The dotted line is the route so far. Tap a city.</p>
+    <p class="figcap"><b>Fig. 2.</b> Places lived and studied, from Warsaw (star) to Aarhus. The dotted line is the route so far. Tap a city.</p>
   </div>
   <div class="section rise">
     <div class="sec-head"><h3>Languages</h3></div>

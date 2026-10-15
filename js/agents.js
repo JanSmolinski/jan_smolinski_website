@@ -38,9 +38,6 @@ const book = ({ slug, title, author = "", kind = "book", c, note = "", quip = ""
           <span class="a">${author}</span><span><span class="t">${title}</span><div class="rule"></div></span><span class="a">${{ game: "game", film: "film", music: "LP" }[kind.split(" ")[0]] || "vol."}</span></div>
       </button>`;
 
-const postmark = (slug, name, place, year) =>
-  `<div class="postmark"><div class="ring"><img src="assets/logos/${slug}.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'pm-text',innerHTML:'${[`<b>${name}</b>`, place, year].filter(Boolean).join("<br>")}'}))"></div><span>${name}${place ? `, ${place}` : ""} · ${year}</span></div>`;
-
 const stamp = (txt, c = "--rust") => `<span class="stamp" style="--c:var(${c})">${txt}</span>`;
 const holder = (flag, label = "", name = "An agent holding a flag") =>
   `<button class="holder" aria-label="${esc(name)}" data-quip="${esc(label)}"><span class="flag ${flag}">${flag === "f-en" ? "en" : ""}</span>${agent("", `<span class="bubble"></span>`)}</button>`;

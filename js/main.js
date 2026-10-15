@@ -153,7 +153,7 @@ function initHome(){
   initNow();
 }
 
-/* Fig. 2 game: one agent runs the gauntlet of academic life. Space, tap or click to jump. */
+/* Fig. 1 game: one agent runs the gauntlet of academic life. Space, tap or click to jump. */
 const HURDLES = ["Reviewer 2", "Deadline", "Ethics form", "Unread email", "R&R", "Zoom call", "Reviewer 3?", "Rejection", "Low battery"];
 const RUN_OVER = ["Reviewer 2 strikes again.", "Major revisions. Again.", "Desk-rejected.", "Please resubmit in six months.", "Have you considered another journal?"];
 function initRunner(){
