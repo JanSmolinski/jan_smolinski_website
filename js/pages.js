@@ -453,7 +453,7 @@ about: () => `
   ${colophon()}`,
 
 opinions: () => `
-  <div class="kicker sc rise">p. 5 · Opinions · the blog, later</div>
+  <div class="kicker sc rise">p. 6 · Opinions · the blog, later</div>
   <h2 class="rise" style="margin-top:10px">No entries yet</h2>
   <p class="lede rise">Strong views, loosely held, about AI agents, negotiation and organisations. The first ones are in draft. The agent in charge of publishing them is resting its eye.</p>
   <button class="sleep rise" id="sleeper" aria-label="Wake the sleeping agent">${agent("asleep", `<span class="bubble"></span>`)}<span class="zz">z z z</span></button>
@@ -461,7 +461,7 @@ opinions: () => `
   ${colophon()}`,
 
 experience: () => `
-  <div class="kicker sc rise">p. 6 · Experience · no agents past this point</div>
+  <div class="kicker sc rise">p. 5 · Experience · no agents past this point</div>
   <h2 class="rise" style="margin-top:10px">Experience</h2>
   <p class="lede rise">Where I've worked, studied and published. Also the only page without jokes.</p>
   <div class="section"><div class="cv rise">

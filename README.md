@@ -18,7 +18,7 @@ A plain static site. No build step, no framework, no package manager.
 | `assets/` | Photos, book covers, logos and the CV PDF |
 | `tools/make-cv.js` | Builds the CV from the publications and experience data |
 
-Pages: Home, About, Projects, Research, Opinions, Experience. Press `1` to `6` to jump between them.
+Pages: Home, About, Projects, Research, Experience, Opinions. Press `1` to `6` to jump between them.
 
 The only outside dependencies are Google Fonts, [d3](https://d3js.org/) and topojson (for the map on the About page), loaded from CDNs, and the [OpenAlex](https://openalex.org/) API, which supplies live citation counts on the Research page.
 

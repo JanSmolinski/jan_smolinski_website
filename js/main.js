@@ -68,7 +68,7 @@ function go(id, push = true){
   setTimeout(() => { layer.innerHTML = ""; busy = false; render(id, true); }, 1050);
 }
 
-/* Number keys jump to the matching page in the contents: 1 Home, 2 About, ... 6 Experience. */
+/* Number keys jump to the matching page in the contents: 1 Home, 2 About, ... 6 Opinions. */
 document.addEventListener("keydown", e => {
   if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey || e.repeat) return;
   const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
