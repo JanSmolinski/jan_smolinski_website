@@ -160,7 +160,7 @@ home: () => `
       <div class="kicker sc">Field notes · vol. I · Aarhus, 2026</div>
       <h1 style="margin-top:12px">Jan Smolinski</h1>
       <p class="lede">I study what happens when <mark>AI agents</mark> start companies, answer interview questions and negotiate with each other. I also <button class="build-one" data-go="projects">build them${blob("peek")}</button>.</p>
-      <p class="byline">PhD fellow · Department of Management · Aarhus University<br>Co-founder &amp; CEO · <a href="https://discurso.ai" target="_blank" rel="noopener">Discurso.AI</a></p>
+      <p class="byline">PhD fellow · Department of Management · <a href="https://pure.au.dk/portal/da/persons/jan.smolinski%40mgmt.au.dk/" target="_blank" rel="noopener">Aarhus University</a><br>Co-founder &amp; CEO · <a href="https://discurso.ai" target="_blank" rel="noopener">Discurso.AI</a></p>
     </div>
     <div class="hero-photo rise" style="--d:.1s">
       ${agent("perch track", `<span class="bubble"></span>`, "button", `aria-label="An agent sitting on the photo"`)}
