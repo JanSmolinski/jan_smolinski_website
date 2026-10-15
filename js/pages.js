@@ -372,14 +372,15 @@ about: () => `
         <button class="vrbuddy" aria-label="An agent wearing a VR headset">${agent("arms", `<span class="bubble"></span><svg class="ov" viewBox="0 0 32 40" aria-hidden="true"><path class="strap" d="M13 17 L5.5 15.5"/><rect class="visor" x="13.5" y="13.5" width="14.5" height="9" rx="4"/><path class="shine" d="M17 16.5 q3 -1.4 7 0"/></svg>`)}</button>
         <div class="pstack vrstack" style="--sa:30/50" aria-label="Headset photos through the years. Tap the top one to see the next.">
         ${photo({ src: "assets/photos/vr-1.jpg", alt: "Jan lifting a white VR headset to his eyes", cap: "Day 1. Mild curiosity.", ar: "3/4" })}
-        ${photo({ src: "assets/photos/vr-5.jpg", alt: "Jan in a different VR headset, docking a boat in a simulator", cap: "Cheating on Apple with a boat-docking sim. We don't talk about it.", ar: "3/4" })}
         ${photo({ src: "assets/photos/vr-3.jpg", alt: "Jan wearing the headset and grinning", cap: "Minute nine. This is what joy looks like.", ar: "3/4" })}
+        ${photo({ src: "assets/photos/vr-5.jpg", alt: "Jan in a different VR headset, docking a boat in a simulator", cap: "Cheating on Apple with a boat-docking sim. We don't talk about it.", ar: "3/4" })}
         ${photo({ src: "assets/photos/holo.jpg", alt: "Jan air-tapping at a screen wall in a HoloLens", cap: "2017. HoloLens. Pointing at a wall like a wizard.", ar: "3/4" })}
         ${photo({ src: "assets/photos/vr-0.jpg", alt: "Young Jan holding a Samsung Gear VR headset to his face", cap: "2016. It started with a phone in a box.", ar: "3/4" })}
         </div>
       </div>
       <div class="pstack aarhus" style="--sa:41/60" aria-label="Photos from Aarhus. Tap the top one to see the next.">
         ${photo({ src: "assets/photos/aarhus-red-car.jpg", alt: "Jan hosting a quiz night with a microphone inside a vintage red bus cab", cap: "quiz night, hosted by yours truly", ar: "4/5" })}
+        ${photo({ src: "assets/photos/aarhus-table.jpg", alt: "A round dining table with four chairs under a painting of a red Corvette", cap: "the table, and a Corvette on the wall", ar: "4/5" })}
         ${photo({ src: "assets/photos/aarhus-pierogi.jpg", alt: "Jan rolling out dough at a white table", cap: "dough from scratch. quality control: me", ar: "4/5" })}
         ${photo({ src: "assets/photos/aarhus-match-night.jpg", alt: "A bar full of Danish football fans watching a match", cap: "match night. red and white everywhere", ar: "4/5" })}
         ${photo({ src: "assets/photos/aarhus.jpg", alt: "Aarhus marina with sailing boats on a sunny day", cap: "Aarhus, home base", ar: "4/5" })}
