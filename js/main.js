@@ -20,8 +20,8 @@ function setStatus(extra){
   statusEl.textContent = n ? `${n} agents under observation${extra ? ` · ${extra}` : ""}` : "no agents observed";
 }
 
-const STATUS = { lost: "one lost", home: "tap one", research: "peer-reviewing", projects: "staring at the blob", about: "commuting", opinions: "one asleep", experience: "one sneaking in" };
-const INIT = { lost: initLost, home: initHome, research: initResearch, about: initAbout, opinions: initWriting, experience: initCV, projects: initProjects };
+const STATUS = { lost: "one lost", home: "tap one", research: "peer-reviewing", projects: "staring at the blob", about: "commuting", thoughts: "one asleep", experience: "one sneaking in" };
+const INIT = { lost: initLost, home: initHome, research: initResearch, about: initAbout, thoughts: initWriting, experience: initCV, projects: initProjects };
 
 function render(id, animate){
   current = id;
@@ -37,7 +37,9 @@ function render(id, animate){
 
 /* Changing pages: every visible agent drops what it's doing and runs to the contents entry. */
 function go(id, push = true){
+  if (id === "thoughts" && current === "thoughts" && openPost && push && !busy){ openThought(null); return; }
   if (!PAGES[id] || id === current || busy) return;
+  if (id === "thoughts") openPost = null;
   if (push) try { history.pushState(null, "", "#" + id); } catch (e) {}
   const link = document.querySelector(`#nav a[data-go="${id}"]`);
   if (reduce() || !link){ render(id, !reduce()); return; }
@@ -68,7 +70,7 @@ function go(id, push = true){
   setTimeout(() => { layer.innerHTML = ""; busy = false; render(id, true); }, 1050);
 }
 
-/* Number keys jump to the matching page in the contents: 1 Home, 2 About, ... 6 Opinions. */
+/* Number keys jump to the matching page in the contents: 1 Home, 2 About, ... 6 Thoughts. */
 document.addEventListener("keydown", e => {
   if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey || e.repeat) return;
   const t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
@@ -78,6 +80,8 @@ document.addEventListener("keydown", e => {
 });
 
 document.addEventListener("click", e => {
+  const po = e.target.closest("[data-post]");
+  if (po){ e.preventDefault(); openThought(po.dataset.post || null); return; }
   const g = e.target.closest("[data-go]");
   if (g){ e.preventDefault(); go(g.dataset.go); return; }
   if (e.target.closest("[data-todo]")){ e.preventDefault(); }
@@ -648,7 +652,9 @@ function initEscape(jar, b, bl, gl, gr){
 
 /* ---------- writing ---------- */
 const SLEEPY = ["Five more minutes. The draft is at 60%.", "I'm not asleep, I'm fine-tuning.", "Publishing is scheduled for… later.", "Come back after the next deadline."];
+const SIGNOFF = ["That's all. I counted the words twice.", "I was one of the question mark's pixels.", "Tasks done. Job pending.", "Please don't automate the author."];
 function initWriting(){
+  const e = stage.querySelector(".endmark .agent"); if (e) e.parentElement.addEventListener("click", () => say(e, pick(SIGNOFF), 2600));
   const s = document.getElementById("sleeper"); if (!s) return;
   const a = s.querySelector(".agent"), zz = s.querySelector(".zz");
   s.addEventListener("click", () => {
@@ -811,11 +817,22 @@ async function raceWeekend(){
   if (repaintNow) repaintNow();
 }
 
-const ALIAS = { ventures: "projects", cv: "experience", writing: "opinions" };
-const fromHash = () => { const h = (location.hash || "").slice(1); const id = ALIAS[h] || h; return PAGES[id] ? id : h ? "lost" : "home"; };
+const ALIAS = { ventures: "projects", cv: "experience", writing: "thoughts", opinions: "thoughts" };
+/* #thoughts/<slug> opens one entry; the page itself stays "thoughts". */
+let openPost = null;
+const fromHash = () => {
+  const [h, slug] = (location.hash || "").slice(1).split("/"); const id = ALIAS[h] || h;
+  openPost = id === "thoughts" && THOUGHTS.some(t => t.slug === slug) ? slug : null;
+  return PAGES[id] ? id : h ? "lost" : "home";
+};
+function openThought(slug){
+  openPost = slug;
+  try { history.pushState(null, "", "#thoughts" + (slug ? "/" + slug : "")); } catch (e) {}
+  render("thoughts", true);
+}
 render(fromHash(), false);
 /* Back/forward buttons and hand-edited #links switch pages too. */
-addEventListener("popstate", () => go(fromHash(), false));
+addEventListener("popstate", () => { const id = fromHash(); id === current ? render(id, false) : go(id, false); });
 
 
 /* Live citation counts from OpenAlex, matched by DOI. Cached for a day; silent if offline. */

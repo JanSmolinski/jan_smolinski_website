@@ -504,11 +504,12 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .theme-toggle:hover{border-color:var(--rust);color:var(--rust)}
 .theme-toggle .ico{font-style:normal;font-size:15px;line-height:1;display:inline-block;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
 .theme-toggle:hover .ico{transform:rotate(-20deg) scale(1.15)}
-.aside-tools{display:flex;flex-wrap:wrap;gap:8px}
+.aside-tools{display:flex;flex-wrap:nowrap;gap:6px;margin-right:-14px}
+.aside-tools button{font-size:15px;padding:3px 10px 4px 8px;white-space:nowrap}
 .guide-btn{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid var(--line);border-radius:99px;padding:3px 12px 4px 9px;cursor:pointer;color:var(--ink-2);font:inherit;font-style:italic;font-size:16px;transition:border-color .2s,color .2s}
 .guide-btn:hover{border-color:var(--rust);color:var(--rust)}
 .guide-btn .ico{font-style:normal;font-size:15px;line-height:1}
-@media (max-width:780px){.aside-tools{position:absolute;top:18px;right:16px;gap:6px}.theme-toggle,.guide-btn{font-size:14px}.guide-btn .lbl{display:none}.guide-btn{padding:3px 9px 4px}aside{position:relative}}
+@media (max-width:780px){.aside-tools{position:absolute;top:18px;right:16px;gap:6px;flex-direction:row;flex-wrap:wrap}.theme-toggle,.guide-btn{font-size:14px}.theme-toggle{padding:3px 9px 4px}.guide-btn .lbl,.theme-toggle .lbl{display:none}.guide-btn{padding:3px 9px 4px}aside{position:relative}}
 /* spotter's guide */
 dialog.guide{width:min(560px,calc(100vw - 32px));max-height:min(80vh,720px);padding:0;border:1px solid var(--line);background:var(--paper-2);color:var(--ink);box-shadow:4px 6px 24px color-mix(in srgb,var(--ink) 25%,transparent);transform:rotate(-.4deg);overflow:auto}
 dialog.guide::backdrop{background:color-mix(in srgb,var(--ink) 45%,transparent)}
@@ -777,3 +778,50 @@ dialog.guide::backdrop{background:color-mix(in srgb,var(--ink) 45%,transparent)}
 .raceweekend .agent.walk:not(:has(svg.ov))::after{animation:rev .18s steps(2) infinite}
 @keyframes rev{50%{translate:0 -.6px}}
 @media (prefers-reduced-motion:reduce){.raceweekend .agent::after{animation:none}}
+
+/* ---------- thoughts: a blog, each entry with a cover made of agents ---------- */
+.posts{margin-top:44px;display:flex;flex-direction:column;gap:56px}
+.post{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:44px;align-items:center}
+.post-cover{display:block;text-decoration:none;color:inherit}
+.post-date{font-size:24px;transform:rotate(-1.5deg);transform-origin:left;margin-bottom:6px}
+.post-text h3{font-size:clamp(28px,3.4vw,40px);line-height:1.05}
+.post-text h3 a{color:var(--ink);text-decoration:none;background:linear-gradient(var(--hl),var(--hl)) 0 100%/0 .4em no-repeat;transition:background-size .35s}
+.post:hover .post-text h3 a,.post-text h3 a:focus-visible{background-size:100% .4em}
+.post-text p{color:var(--ink-2);margin:14px 0 0;max-width:36ch}
+.post-more{display:inline-block;margin-top:16px;font-style:italic}
+
+.tcover{width:100%}
+.tcover .frame{aspect-ratio:8/5;background:var(--paper-2);position:relative}
+.cover-art{width:100%;height:100%;display:block}
+.cover-art .ground{stroke:var(--faint);stroke-width:1.4;stroke-dasharray:2 7;stroke-linecap:round;fill:none}
+.cover-art .human{--agfill:var(--ink);--agline:var(--ink);--agtip:var(--rust);--ageye:var(--paper-2);--agpupil:var(--ink)}
+.cover-art .ques{--agfill:var(--rust);--agline:var(--rust);--agtip:var(--ink);--ageye:var(--paper-2);--agpupil:var(--ink)}
+.cover-art .strays use{--agfill:var(--paper-2);--agline:var(--ink)}
+.cover-art use{translate:0 0}
+.post:hover .crowd use,.tcover.big:hover .crowd use{animation:agenthop .55s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+@keyframes agenthop{to{translate:0 -3px}}
+.post:hover .tcover{transform:rotate(-.4deg) translateY(-2px)}
+.tcover{transition:transform .35s cubic-bezier(.3,1.3,.5,1)}
+
+.back{display:inline-block;font-style:italic;text-decoration:none}
+.back:hover{text-decoration:underline}
+.post-head{margin:26px 0 30px;max-width:15em}
+.post-head .kicker{margin-bottom:10px}
+.post-head h1{font-size:clamp(40px,6vw,68px)}
+.tcover.big{max-width:900px;margin-bottom:6px}
+.prose{max-width:34em;margin:54px auto 0 0;font-size:21px;line-height:1.62}
+.prose p{margin:0 0 1.15em}
+.prose > p:first-of-type::first-letter{font-size:3.3em;float:left;line-height:.82;padding:.06em .1em 0 0;color:var(--rust)}
+.prose h3{margin:1.6em 0 .5em}
+.prose blockquote{margin:1.6em 0 1.6em -.6em;padding:.1em 0 .1em 1em;border-left:3px solid var(--rust);font-size:1.25em;line-height:1.35;font-style:italic;text-wrap:balance}
+.draftnote{font-size:20px;margin:0 0 14px;transform:rotate(-1deg);transform-origin:left}
+.endmark{display:flex;align-items:flex-end;gap:12px;margin-top:40px;color:var(--faint);cursor:pointer}
+.endmark .agent{--aw:26px}
+.post-head + div,.back{position:relative}
+.prose + .back{margin-top:44px}
+
+@media (max-width:860px){
+  .post{grid-template-columns:minmax(0,1fr);gap:26px}
+  .prose{font-size:20px;margin-top:40px}
+}
+@media (prefers-reduced-motion:reduce){.post:hover .crowd use,.tcover.big:hover .crowd use{animation:none}.tcover{transition:none}}

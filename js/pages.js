@@ -48,8 +48,8 @@ const CITY_STAMPS = [
   { art: "vienna", slug: "iacm-2026", name: "IACM", place: "Vienna", year: "2026", quips: "Vienna: where every negotiation comes with cake.|I came for the Riesenrad. Stayed for the Sachertorte.|Waltzing into a distributive bargain." },
   { art: "paris", slug: "intra-2026", name: "INTRA", place: "Paris", year: "2026", quips: "The Eiffel Tower is a very tall BATNA.|In Paris everything is negotiable. Except the queue.|Croissant first, concessions later." },
   { art: "online", slug: "ai-negotiation-forum-2026", name: "AI Negotiation Forum", place: "Online", year: "2026", quips: "Online: the only city with perfect wifi. Allegedly.|You're on mute. You were always on mute.|Commute: four steps." },
-  { art: "capetown", slug: "intra-2025", name: "INTRA", place: "Cape Town", year: "2025", quips: "Table Mountain has the flattest ask I've ever seen.|That cloud on top is just anchoring.|Best view of any conference. No contest." },
   { art: "milan", slug: "edtech-forum-2025", name: "EdTech Forum", place: "Milan", year: "2025", quips: "Aperitivo is the real negotiation table.|The Duomo has thousands of statues. Zero agents. Yet.|Espresso for everyone except Jan." },
+  { art: "capetown", slug: "intra-2025", name: "INTRA", place: "Cape Town", year: "2025", quips: "Table Mountain has the flattest ask I've ever seen.|That cloud on top is just anchoring.|Best view of any conference. No contest." },
 ];
 /* A perforated postage stamp with the city sketch and conference name, cancelled by a postmark with the city and year. */
 const cityStamp = (c, i) => {
@@ -252,6 +252,8 @@ research: () => {
     <div class="cc-stat"><b id="cc-cites">·</b><span>citations</span></div>
     <div class="cc-stat"><b id="cc-h">·</b><span>h-index</span></div>
     <div class="cc-stat"><b>${PUBLISHED.length}</b><span>publications</span></div>
+    <div class="cc-stat"><b>${PUBLISHED.filter(p => p[3] === "Journal article").length}</b><span>peer-reviewed</span></div>
+    <div class="cc-stat"><b>${P.length}</b><span>open projects</span></div>
     <button class="holder citeagent" aria-label="An agent with opinions about the citation count" data-quip="Not a lot, but it's honest work.|Stop judging. He's not that old yet.|Every citation was earned. Some were even read.|h-index 1. Rome wasn't cited in a day.|Give him until the PhD is done.">${agent("", `<span class="bubble"></span>`)}</button>
     <p class="cc-note hand">counted live from OpenAlex · tap the agent</p>
   </div>
@@ -455,13 +457,7 @@ about: () => `
   </div>
   ${colophon()}`,
 
-opinions: () => `
-  <div class="kicker sc rise">p. 6 · Opinions · the blog, later</div>
-  <h2 class="rise" style="margin-top:10px">No entries yet</h2>
-  <p class="lede rise">Strong views, loosely held, about AI agents, negotiation and organisations. The first ones are in draft. The agent in charge of publishing them is resting its eye.</p>
-  <button class="sleep rise" id="sleeper" aria-label="Wake the sleeping agent">${agent("asleep", `<span class="bubble"></span>`)}<span class="zz">z z z</span></button>
-  <div class="ruled rise"><span class="hand">Ideas: what agents say when you interview them ·<br>why α = 0.08 is not a typo ·<br>notes from the sim rig</span></div>
-  ${colophon()}`,
+thoughts: () => openPost ? thoughtView(THOUGHTS.find(t => t.slug === openPost)) : thoughtsList(),
 
 experience: () => `
   <div class="kicker sc rise">p. 5 · Experience · no agents past this point</div>

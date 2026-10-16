@@ -13,14 +13,19 @@ A plain static site. No build step, no framework, no package manager.
 | `index.html` | The shell: sidebar navigation, page container, fonts and scripts |
 | `css/style.css` | All styling, including light and dark ("Night notes") themes |
 | `js/agents.js` | The agent drawing and small helpers (photos, books, postmarks, stamps) |
+| `js/thoughts.js` | The Thoughts posts (`THOUGHTS` list) and the agent-made cover generators (`COVERS`) |
 | `js/pages.js` | The content: one template per page, plus the data lists (publications, experience, shelf) |
 | `js/main.js` | Page switching, keyboard shortcuts, and every agent's behaviour and one-liners |
 | `assets/` | Photos, book covers, logos and the CV PDF |
 | `tools/make-cv.js` | Builds the CV from the publications and experience data |
 
-Pages: Home, About, Projects, Research, Experience, Opinions. Press `1` to `6` to jump between them.
+Pages: Home, About, Projects, Research, Experience, Thoughts. Press `1` to `6` to jump between them.
 
 The only outside dependencies are Google Fonts, [d3](https://d3js.org/) and topojson (for the map on the About page), loaded from CDNs, and the [OpenAlex](https://openalex.org/) API, which supplies live citation counts on the Research page.
+
+## Adding a thought
+
+Add an entry to `THOUGHTS` in `js/thoughts.js`: `slug`, `date` (YYYY-MM-DD), `title`, `blurb` (shown in the list), `cover` (a key in `COVERS`) and `body` (HTML). Each cover is a function that fills shapes drawn on a hidden canvas with tiny agents, so a new cover is a new drawing. Entries open at `#thoughts/<slug>`.
 
 ## Run it locally
 
