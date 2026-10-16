@@ -152,6 +152,9 @@ const SHELF = [
     { slug: "the-terminal", title: "The Terminal", author: "Steven Spielberg", kind: "film", c: "#3A4A5A", note: "A man, an airport, and the longest negotiation with bureaucracy.", quip: "Stuck at the gate. Counter-offer: a stamp." },
     { slug: "austin-powers", title: "Austin Powers", author: "Mike Myers", kind: "film", c: "#1F4A9A", note: "Yeah, baby, yeah.", quip: "I only negotiate in groovy terms, baby." },
     { slug: "formula-one", title: "Formula One", author: "every Sunday", kind: "film", c: "#A3302A", note: "Every race weekend. Lights out and away we go.", quip: "Box, box. Tyres are gone." },
+    { slug: "the-office", title: "The Office", author: "Dunder Mifflin", kind: "film", c: "#D8D6D0", note: "An entire organisation studied from the inside. Basically fieldwork.", quip: "Michael Scott's negotiation strategy: no BATNA, all heart." },
+    { slug: "friends", title: "Friends", author: "Central Perk", kind: "film", c: "#3A3A3A", note: "Comfort rewatch, coffee included.", quip: "We were on a break. Clarify the terms of the agreement." },
+    { slug: "silicon-valley", title: "Silicon Valley", author: "Mike Judge", kind: "film", c: "#C9CDD2", note: "Startups, term sheets and one very good compression algorithm.", quip: "Pied Piper's pitch deck still beats most of mine." },
     { title: "film", kind: "empty", quip: "Popcorn is ready. The film isn't." },
   ] },
   { label: "Music", items: [
