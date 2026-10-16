@@ -351,8 +351,11 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .discurso{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center;background:var(--paper-2);border:1px solid var(--line);padding:34px;position:relative}
 .discurso::before{content:"";position:absolute;inset:8px;border:1px solid color-mix(in srgb,#6B6FF0 22%,transparent);pointer-events:none}
 .d-logo{height:44px;width:auto}
-:root[data-theme="dark"] .d-logo{filter:invert(1) hue-rotate(180deg)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .d-logo{filter:invert(1) hue-rotate(180deg)}}
+/* logos with a light and a dark version */
+img.dk{display:none}
+:root[data-theme="dark"] img.lt{display:none}
+:root[data-theme="dark"] img.dk{display:block}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) img.lt{display:none}:root:not([data-theme="light"]) img.dk{display:block}}
 .d-text{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
 .d-lede{font-size:21px;line-height:1.45;margin:6px 0 0}
 .d-text .muted{margin:0;font-size:17px}

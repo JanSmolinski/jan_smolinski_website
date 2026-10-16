@@ -246,7 +246,7 @@ research: () => {
   <p class="lede rise">I'm a PhD fellow at Aarhus University (Department of Management, 2026–2029). I study what happens when AI agents act for people: in new ventures, and across the negotiating table.</p>
   <div class="interests rise" aria-label="Research interests">
     <span class="sc">Interests</span>
-    <span class="chip">AI agents</span><span class="chip">negotiation</span><span class="chip">entrepreneurship</span><span class="chip">assessing negotiation skill</span><span class="chip">ethics of agents</span>
+    <span class="chip">AI agents</span><span class="chip">negotiation</span><span class="chip">entrepreneurship</span>
   </div>
   <div class="citecard rise">
     <div class="cc-stat"><b id="cc-cites">·</b><span>citations</span></div>
@@ -307,7 +307,7 @@ projects: () => `
   <h2 class="rise" style="margin-top:10px">Things I build outside the lab</h2>
   <section class="section discurso rise" style="--d:.08s">
     <div class="d-text">
-      <img class="d-logo" src="assets/logos/discurso.png" alt="Discurso.AI">
+      <img class="d-logo lt" src="assets/logos/discurso.png" alt="Discurso.AI"><img class="d-logo dk" src="assets/logos/discurso-dark.png" alt="Discurso.AI">
       <p class="d-lede">I co-founded Discurso.AI. You practise negotiating against realistic AI counterparts, and it gives feedback on the skills behind a deal, not only the outcome.</p>
       <p class="muted">Used in negotiation courses at universities in Europe, Australia and South America, plus a subscription for individuals.</p>
       <a class="btn" href="https://discurso.ai" target="_blank" rel="noopener">Visit Discurso.AI →</a>
@@ -338,7 +338,7 @@ projects: () => `
   <div class="section ventures">
     <article class="venture wide rise" style="--d:.1s">
       ${stamp("Annual", "--pen")}
-      <div class="logo"><img src="assets/logos/negotiation-challenge.png" alt="The Negotiation Challenge"></div>
+      <div class="logo"><img class="lt" src="assets/logos/negotiation-challenge.png" alt="The Negotiation Challenge"><img class="dk" src="assets/logos/negotiation-challenge-dark.png" alt="The Negotiation Challenge"></div>
       <p>The Negotiation Challenge is an international negotiation competition for students. I'm part of the team behind it and look after the technical setup. Its rounds also became the dataset for my assessment research.</p>
       <div class="visit"><a class="btn" href="https://thenegotiationchallenge.org/" target="_blank" rel="noopener">Visit The Negotiation Challenge →</a></div>
       ${photo({ src: "assets/photos/tnc-presenting.jpg", alt: "Jan presenting at The Negotiation Challenge 2025", cap: "presenting the AI scoring results, TNC 2025", r: 1.5, ar: "3/2" })}
