@@ -258,12 +258,22 @@ function nowVerdict(h, d, w){
   if (d === "Tue" && h >= 6 && h < 22) return wet ? "Pool day. Wet either way, but the pool is heated." : "Pool day. Lane etiquette is a negotiation too.";
   if (wet) return "Rain again. The bike has opinions.";
   if (h < 6) return "Why is anyone awake? Even the agents are idle.";
-  if (h < 9) return "Coffee first. Then science.";
+  if (h < 9) return "Breakfast first. Then science.";
   if (h < 12) return "Prime thinking hours. Meetings are the enemy.";
   if (h < 14) return "Lunch. The cafeteria is a negotiation.";
   if (h < 18) return "Afternoon slump. A pastry would fix this.";
   if (h < 22) return "Evening. Dough is probably rising somewhere.";
   return "Late. The paper can wait until tomorrow.";
+}
+function costumeNote(){
+  const c = document.body.classList, r = RACE && RACE.n.replace(/ Grand Prix$/, " GP");
+  return [
+    c.contains("pirates") && "Why the pirate hats? Someone typed the Konami code.",
+    c.contains("halloween") && "Why the witch hats? It's October, and Halloween is coming.",
+    c.contains("xmas") && "Why the Santa hats? It's December.",
+    c.contains("may4") && "Why the lightsabers? May the 4th be with you.",
+    c.contains("raceweekend") && `Why the helmets and cars? It's ${r || "a Formula One"} weekend.`
+  ].filter(Boolean).join(" ");
 }
 async function initNow(){
   const card = document.getElementById("nowcard"); if (!card) return;
@@ -278,6 +288,9 @@ async function initNow(){
     const v = nowVerdict(+hm.slice(0, 2), day, w.code === undefined ? null : w);
     $("now-agent").dataset.quip = v;
     $("now-note").textContent = v;
+    /* Why is everyone dressed up? Say so, whenever a costume is active. */
+    const why = costumeNote(), el = $("now-why");
+    el.hidden = !why; el.textContent = why;
   };
   repaintNow = paint;
   paint(); const iv = setInterval(() => card.isConnected ? paint() : clearInterval(iv), 30000);
@@ -721,6 +734,7 @@ function pirates(){
   [...stage.querySelectorAll(".agent")].filter(a => inView(a) && a.querySelector(".bubble")).slice(0, 4)
     .forEach((a, i) => setTimeout(() => say(a, on ? pick(ARR) : "Back to the navy.", 2200), i * 220));
   setStatus(on ? "pirates aboard" : STATUS[current]);
+  if (repaintNow) repaintNow();
 }
 
 let walking = false;
@@ -754,6 +768,12 @@ function walkAway(){
   }, 4200);
 }
 
+/* Spotter's guide: a small dialog that explains the easter eggs. */
+const guide = document.getElementById("guide");
+document.getElementById("guideBtn").addEventListener("click", () => guide.showModal());
+document.getElementById("guideX").addEventListener("click", () => guide.close());
+guide.addEventListener("click", e => { if (e.target === guide) guide.close(); });
+
 /* For anyone who opens the developer tools. */
 console.log(`%c
        o
@@ -768,6 +788,7 @@ console.log(`%c
 const PREVIEW = new URLSearchParams(location.search).has("today");
 const TODAY = (() => { const q = new URLSearchParams(location.search).get("today"); const d = q ? new Date(q + "T12:00") : new Date(); return isNaN(d) ? new Date() : d; })();
 if (TODAY.getMonth() === 4 && TODAY.getDate() === 4) document.body.classList.add("may4");
+if (TODAY.getMonth() === 9) document.body.classList.add("halloween");
 if (TODAY.getMonth() === 11) document.body.classList.add("xmas");
 /* Formula One race weekend (Friday to Sunday): every agent wears a helmet and the Aarhus card follows the race.
    Calendar from the jolpica F1 API, cached for a week. */

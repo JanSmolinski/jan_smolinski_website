@@ -40,7 +40,10 @@
       <a href="#experience" data-go="experience">Experience <span class="pg">5</span></a>
       <a href="#opinions" data-go="opinions">Opinions <span class="pg">6</span></a>
     </nav>
-    <button class="theme-toggle" id="themeToggle" type="button"><span class="ico" aria-hidden="true"></span><span class="lbl"></span></button>
+    <div class="aside-tools">
+      <button class="theme-toggle" id="themeToggle" type="button"><span class="ico" aria-hidden="true"></span><span class="lbl"></span></button>
+      <button class="guide-btn" id="guideBtn" type="button" aria-haspopup="dialog" aria-label="Spotter's guide: what to find on this site"><span class="ico" aria-hidden="true">?</span><span class="lbl">Spotter's guide</span></button>
+    </div>
     <div class="aside-foot">
       <span class="hand">Note to visitors:</span><br>
       the agents are harmless. Tap them. They answer questions, mostly truthfully.
@@ -49,6 +52,41 @@
 
   <main id="stage" aria-live="polite"></main>
   <div id="runlayer" aria-hidden="true"></div>
+
+  <dialog class="guide" id="guide" aria-labelledby="guideTitle">
+    <button class="guide-x" id="guideX" type="button" aria-label="Close the guide">×</button>
+    <div class="guide-in">
+      <h2 id="guideTitle">Spotter's guide</h2>
+      <p class="hand sub">things hiding in this notebook, for the curious</p>
+      <h3>Everywhere</h3>
+      <ul>
+        <li><b>Tap an agent.</b> Almost all of them have something to say.</li>
+        <li><b>Keys <kbd>1</kbd> to <kbd>6</kbd></b> jump between pages.</li>
+        <li><b>Type <kbd>batna</kbd></b> and everyone walks away, then comes back to negotiate.</li>
+        <li><b>The Konami code</b> (↑ ↑ ↓ ↓ ← → ← → B A) hands out pirate hats. Again to take them back.</li>
+        <li><b>Sit still for 30 seconds</b> and an agent wanders past to check on you.</li>
+        <li><b>Switch tabs</b> and the page title notices.</li>
+        <li><b>Follow a broken link</b> (try <kbd>#nowhere</kbd>) and an agent gets lost.</li>
+        <li><b>Open the developer tools</b> for a greeting.</li>
+      </ul>
+      <h3>Page by page</h3>
+      <ul>
+        <li><b>Home:</b> press play on Fig. 1 and survive peer review. Score 100 and the antenna turns gold.</li>
+        <li><b>Research:</b> keep asking Reviewer 2 for a verdict. Persistence pays, eventually. Tap the agent on every conference stamp to complete the passport.</li>
+        <li><b>Projects:</b> wiggle your mouse back and forth over the jar lid.</li>
+        <li><b>About:</b> tap the little pirate ship, and tap the photo stacks to flick through them.</li>
+        <li><b>Opinions and Experience:</b> there is a sleeper and a peeker. Poke them.</li>
+      </ul>
+      <h3>The calendar</h3>
+      <ul>
+        <li><b>October:</b> witch hats. <b>December:</b> Santa hats. <b>4 May:</b> lightsabers.</li>
+        <li><b>Formula One race weekends:</b> helmets, little cars and a race-aware Aarhus card.</li>
+        <li><b>Aarhus card:</b> the verdict changes for quiz night, pool day, Fredagsbar and the weather.</li>
+        <li>Add <kbd>?today=2026-12-24</kbd> to the address to preview any date.</li>
+      </ul>
+    </div>
+  </dialog>
+
   <div class="status" id="status" aria-hidden="true">no agents observed</div>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>

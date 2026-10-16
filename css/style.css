@@ -504,7 +504,24 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .theme-toggle:hover{border-color:var(--rust);color:var(--rust)}
 .theme-toggle .ico{font-style:normal;font-size:15px;line-height:1;display:inline-block;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
 .theme-toggle:hover .ico{transform:rotate(-20deg) scale(1.15)}
-@media (max-width:780px){.theme-toggle{position:absolute;top:18px;right:16px;font-size:14px}aside{position:relative}}
+.aside-tools{display:flex;flex-wrap:wrap;gap:8px}
+.guide-btn{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid var(--line);border-radius:99px;padding:3px 12px 4px 9px;cursor:pointer;color:var(--ink-2);font:inherit;font-style:italic;font-size:16px;transition:border-color .2s,color .2s}
+.guide-btn:hover{border-color:var(--rust);color:var(--rust)}
+.guide-btn .ico{font-style:normal;font-size:15px;line-height:1}
+@media (max-width:780px){.aside-tools{position:absolute;top:18px;right:16px;gap:6px}.theme-toggle,.guide-btn{font-size:14px}.guide-btn .lbl{display:none}.guide-btn{padding:3px 9px 4px}aside{position:relative}}
+/* spotter's guide */
+dialog.guide{width:min(560px,calc(100vw - 32px));max-height:min(80vh,720px);padding:0;border:1px solid var(--line);background:var(--paper-2);color:var(--ink);box-shadow:4px 6px 24px color-mix(in srgb,var(--ink) 25%,transparent);transform:rotate(-.4deg);overflow:auto}
+dialog.guide::backdrop{background:color-mix(in srgb,var(--ink) 45%,transparent)}
+.guide-in{padding:22px 26px 22px}
+.guide h2{margin:0;font-weight:500;font-size:26px}
+.guide .sub{font-size:21px;margin:0 0 6px}
+.guide h3{font-variant-caps:all-small-caps;letter-spacing:.07em;font-weight:500;font-size:17px;color:var(--faint);margin:18px 0 4px;border-bottom:1px dotted var(--line)}
+.guide ul{margin:0;padding:0;list-style:none}
+.guide li{padding:4px 0;font-size:17px;line-height:1.35}
+.guide li b{font-weight:600}
+.guide kbd{font:inherit;font-style:italic;border:1px solid var(--line);border-radius:3px;padding:0 4px}
+.guide-x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:26px;line-height:1;color:var(--ink-2);cursor:pointer}
+.guide-x:hover{color:var(--rust)}
 
 /* exhibit B: the headset years */
 .vr-intro{margin:0 0 26px;font-size:18px;color:var(--ink-2)}
@@ -675,6 +692,8 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 /* Aarhus right now */
 .nowcard{position:relative;margin-top:10px;padding:18px 22px 12px;background:var(--paper-2);border:1px solid var(--line);transform:rotate(.4deg);box-shadow:3px 4px 14px color-mix(in srgb,var(--ink) 10%,transparent)}
 .now-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.now-why{margin:8px 0 0;font-size:19px;color:var(--pen);transform:rotate(-.5deg)}
+.now-why[hidden]{display:none}
 .now-head .hand{font-size:22px;transform:rotate(-1deg)}
 .now-grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 34px;margin-top:10px}
 .now-grid .cc-stat b{font-size:34px;min-width:2.2ch;display:block}
@@ -731,12 +750,14 @@ mark{background:linear-gradient(transparent 58%,var(--hl) 0);color:inherit;paddi
 .lost-agent .agent>svg:first-child{animation:confused 3.2s ease-in-out infinite;transform-origin:50% 100%}
 @keyframes confused{25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
 
-/* costumes: Santa hats in December, helmets on race weekends, pirate hats after the Konami code.
+/* costumes: Santa hats in December, witch hats in October, helmets on race weekends, pirate hats after the Konami code.
    Agents that already wear something (an overlay drawing, or the pirate crew) keep their own outfit. */
-:is(.xmas,.raceweekend,.pirates) .agent:not(:has(svg.ov)):not(.pirate .agent)::before{content:"";position:absolute;pointer-events:none;z-index:1;background-position:center;background-size:100% 100%;background-repeat:no-repeat}
-:is(.xmas,.raceweekend,.pirates) .agent.flip::before{transform:scaleX(-1)}
+:is(.xmas,.halloween,.raceweekend,.pirates) .agent:not(:has(svg.ov)):not(.pirate .agent)::before{content:"";position:absolute;pointer-events:none;z-index:1;background-position:center;background-size:100% 100%;background-repeat:no-repeat}
+:is(.xmas,.halloween,.raceweekend,.pirates) .agent.flip::before{transform:scaleX(-1)}
 .xmas .agent::before{left:8%;top:0;width:82%;height:28%;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 26'%3E%3Cpath d='M5 21C8 9 20 2 33 6c2 1 3 3 2 6-5-3-13 0-17 9z' fill='%23C0392B' stroke='%232A2622' stroke-width='.8'/%3E%3Crect x='2' y='18' width='24' height='7' rx='3.5' fill='%23F4EFE4' stroke='%232A2622' stroke-width='.8'/%3E%3Ccircle cx='35' cy='12' r='3.2' fill='%23F4EFE4' stroke='%232A2622' stroke-width='.8'/%3E%3C/svg%3E")}
+.halloween .agent::before{left:-4%;top:-14%;width:104%;height:42%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 30'%3E%3Cpath d='M13 22C15 14 17 8 21 2c2-2 4 0 4 2 0 2 2 3 4 4-2 0-3 1-3 2 1 4 3 8 5 12z' fill='%236B3FA0' stroke='%232A2622' stroke-width='.9' stroke-linejoin='round'/%3E%3Cpath d='M14 18.5q9 2.5 18 0l1 3.5q-10 3-20 0z' fill='%23E8832A' stroke='%232A2622' stroke-width='.8' stroke-linejoin='round'/%3E%3Cellipse cx='22' cy='24' rx='20' ry='4' fill='%236B3FA0' stroke='%232A2622' stroke-width='.9'/%3E%3Crect x='20' y='18.8' width='4.5' height='3.6' rx='.6' fill='none' stroke='%232A2622' stroke-width='.8'/%3E%3C/svg%3E")}
 .raceweekend .agent::before{left:0;top:0;width:100%;height:100%;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 40'%3E%3Cpath d='M4.5 19.5C4.5 8 10 4.5 16 4.5c7.5 0 12 5 12 12.5v2.5z' fill='%23B4462B' stroke='%232A2622' stroke-width='1.3'/%3E%3Cpath d='M10 6.5q6-.9 12 .5' fill='none' stroke='%23F4EFE4' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M14 12.5h14V19H14z' fill='%232A2622' opacity='.35' stroke='%232A2622' stroke-width='.9'/%3E%3C/svg%3E")}
 .pirates .agent::before{left:6%;top:4%;width:88%;height:24%;background:var(--ink);

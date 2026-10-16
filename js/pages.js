@@ -174,6 +174,8 @@ const SHELF = [
     { slug: "dirt-3", title: "DiRT 3", kind: "game", c: "#1A9AA8", note: "Rally, gymkhana and a lot of mud.", quip: "Understeer is just a negotiation with the corner." },
     { slug: "gta-v", title: "Grand Theft Auto V", kind: "game", c: "#1A1A1A", note: "Three protagonists, zero BATNAs.", quip: "Strictly fictional negotiation tactics. Mostly." },
     { slug: "indiana-jones-great-circle", title: "Indiana Jones and the Great Circle", kind: "game", c: "#B0742A", note: "Whip, hat and a Vatican conspiracy.", quip: "It belongs in a museum. So does my first draft." },
+    { slug: "civilization-v", title: "Sid Meier's Civilization V", kind: "game", c: "#2F5A7A", note: "One more turn. It is now 4 a.m.", quip: "Trade routes, treaties and one more turn. Pure negotiation." },
+    { slug: "anno-1404", title: "Anno 1404", kind: "game", c: "#2F6A8A", note: "Build a trading empire, one spice route at a time.", quip: "Trade routes, tariffs and a very patient sultan. Pure negotiation." },
     { slug: "watch-dogs", title: "Watch Dogs", kind: "game", c: "#2A3A4A", note: "Hacking a whole city from a phone.", quip: "Hacked the whole city. Still can't hack Reviewer 2." },
     { slug: "lego-star-wars", title: "LEGO Star Wars: The Complete Saga", kind: "game", c: "#1A2A5A", note: "Every Star Wars scene, rebuilt in bricks.", quip: "Padmé would have negotiated this. In bricks." },
     { slug: "new-super-mario-bros", title: "New Super Mario Bros.", kind: "game cart mario", c: "#3A8AD0", note: "Jump, stomp, repeat. Slide the cartridge out.", quip: "Jump first, negotiate with the Goomba later." },
@@ -218,6 +220,7 @@ home: () => `
         <div class="cc-stat rain"><b id="now-rain">·</b><span>rain?</span></div>
         <button class="holder" id="now-agent" aria-label="An agent with a verdict on Aarhus right now" data-quip="">${agent("", `<span class="bubble"></span>`)}</button>
       </div>
+      <p class="now-why hand" id="now-why" hidden></p>
       <p class="cc-note hand">weather from open-meteo · tap the agent for the local verdict</p>
     </div>
   </section>
